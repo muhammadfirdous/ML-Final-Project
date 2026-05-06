@@ -203,22 +203,24 @@ backend/
 
 | Task | Dataset | ANN | RNN | LSTM | GRU | Best | Headline |
 |---|---|---|---|---|---|---|---|
-| Speech | TESS | — | 100% | 100% | 100% | RNN (tie) | All saturate; TESS's 2-actress structure is too easy |
-| Sentiment | Twitter | — | 90% | **94%** | 93% | LSTM | Textbook ordering; LSTM gates beat plain RNN |
+| Speech | TESS (speaker-independent) | — | 50% | 43% | **52%** | GRU | Train on OAF, test on YAF — GRU generalizes best across voices |
+| Sentiment | Twitter | — | **96%** | 93% | 95% | RNN | Textbook short text; all three are strong |
 | Time Series | CORGIS Weather | 48% | 42% | **48%** | 41% | LSTM (RMSE 12.6°F) | Multi-station weekly is genuinely hard |
 | Time Series | Daily Climate | **86%** | 29% | 51% | 46% | ANN (RMSE 2.5°C) | Smooth seasonal data → MLP > recurrent |
 | Time Series | Seattle Weather | 61% | **63%** | 62% | 59% | RNN | All cluster ~60%; class imbalance dominates |
 
 Accuracy is rendered as **R² for regression** (CORGIS, Daily Climate) and standard accuracy for classification (TESS, Twitter, Seattle). Full per-model metrics including precision/recall/F1/AUC/MAE/RMSE/MAPE live in `results/<task>_<dataset>_<model>.json`.
 
-### Architectural notes worth knowing
+### Architectural & methodology notes worth knowing
 
-The training pipeline is configured cleanly in `config.py`, but two task-specific tweaks were needed to make all 18 models converge:
+The training pipeline is configured cleanly in `config.py`, but a few task-specific tweaks were needed:
 
-1. **TESS (speech) needs `pool_over_time=True` and `lr=5e-3`.** With 174 timesteps of 40-D MFCC, the default `lr=1e-3` + final-hidden-state classification leaves GRU stuck at chance (14% on 7 classes). Switching to `return_sequences=True` + `GlobalAveragePooling1D` + 5× higher LR fixes it cleanly. Applied to all 3 RNN-family speech models for a fair comparison.
-2. **MFCC features need z-score normalization.** Raw MFCCs span roughly `[-700, 200]` and the first coefficient (energy) has std 214 — large enough to saturate the gating sigmoids on a long sequence. `preprocessing.prep_tess` standardises per coefficient before training.
+1. **TESS uses a speaker-independent split.** TESS contains only 2 actresses (OAF, YAF) reading the same 200 sentences across 7 emotions. A naive stratified random split lets both speakers leak into train and val, and every model hits ~100% by memorising voice + sentence patterns rather than emotion features. We hold YAF out entirely: train on OAF, test on YAF. MFCC z-score statistics are also computed from the train (OAF) split only. Results drop from a misleading 100% to a realistic 43–52%, and the comparative story between RNN/LSTM/GRU becomes meaningful.
+2. **TESS (speech) needs `pool_over_time=True` and `lr=5e-3`.** With 174 timesteps of 40-D MFCC, the default `lr=1e-3` + final-hidden-state classification leaves GRU stuck at chance. Switching to `return_sequences=True` + `GlobalAveragePooling1D` + 5× higher LR fixes it. Applied to all 3 RNN-family speech models for a fair comparison.
+3. **MFCC features need z-score normalization.** Raw MFCCs span roughly `[-700, 200]` and the first coefficient (energy) has std 214 — large enough to saturate the gating sigmoids on a long sequence. `preprocessing.prep_tess` standardises per coefficient before training, using train-speaker stats only.
+4. **No L2 regularization on the LSTM kernel.** Combined with the no-mask Embedding for the Twitter task, an L2 of 1e-4 pushes the kernel toward zero before it can learn — model collapses to the class prior (27% acc). With L2 removed all three sentiment models train cleanly.
 
-Time-series and Twitter use the default LR / hp without any per-task overrides.
+Time-series tasks use the default LR / hp without per-task overrides.
 
 ### Retraining
 

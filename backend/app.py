@@ -333,7 +333,87 @@ def train():
 
 @app.post("/api/predict")
 def predict():
-    abort(501, description="Phase 2 stub — single-sample inference arrives in Phase 7.")
+    """Single-sample inference for a previously-trained model.
+
+    Three input shapes:
+      - sentiment   → JSON body ``{task, model, text}``
+      - speech      → multipart upload, file field ``audio``,
+                       form fields ``task=speech`` and ``model=...``
+      - timeseries  → JSON body ``{task, datasetId, model, window}`` OR
+                       ``{task, datasetId, model, sampleId}`` (uses cached sample)
+    """
+    from src import inference
+
+    # Speech needs multipart; everything else is JSON.
+    if request.content_type and request.content_type.startswith("multipart/"):
+        task = (request.form.get("task") or "").strip()
+        model = (request.form.get("model") or "").strip()
+        f = request.files.get("audio")
+        if task != "speech" or not model or f is None:
+            abort(400, description="Speech requests need task=speech, model, and audio file.")
+        try:
+            return jsonify(inference.predict_speech(model, f.read()))
+        except FileNotFoundError as exc:
+            abort(404, description=str(exc))
+        except Exception as exc:
+            abort(400, description=f"Inference failed: {exc}")
+
+    body = request.get_json(silent=True) or {}
+    task = (body.get("task") or "").strip()
+    model = (body.get("model") or "").strip()
+    if not task or not model:
+        abort(400, description="Required fields: task, model.")
+
+    try:
+        if task == "sentiment":
+            text = body.get("text") or body.get("input") or ""
+            if not text.strip():
+                abort(400, description="Empty text input.")
+            return jsonify(inference.predict_sentiment(model, text))
+
+        if task == "timeseries":
+            dataset_id = body.get("datasetId") or body.get("dataset")
+            if not dataset_id:
+                abort(400, description="timeseries predictions need datasetId.")
+            window = body.get("window")
+            sample_id = body.get("sampleId")
+            if window is None and sample_id is not None:
+                # Look up the cached window by id.
+                samples = inference.list_ts_samples(dataset_id)
+                match = next((s for s in samples if str(s.get("id")) == str(sample_id)), None)
+                if match is None:
+                    abort(404, description=f"Unknown sampleId for {dataset_id}: {sample_id!r}")
+                result = inference.predict_timeseries(dataset_id, model, match["window"], sample_id)
+                # Merge actual + label so the frontend can show side-by-side.
+                result["sample"] = {k: match.get(k) for k in ("label", "actual", "actualClass", "date")}
+                return jsonify(result)
+            if window is None:
+                abort(400, description="timeseries predictions need either window[][] or sampleId.")
+            return jsonify(inference.predict_timeseries(dataset_id, model, window, sample_id))
+
+        if task == "speech":
+            abort(400, description="Speech requires multipart/form-data (audio file).")
+    except FileNotFoundError as exc:
+        abort(404, description=str(exc))
+    except ValueError as exc:
+        abort(400, description=str(exc))
+    abort(400, description=f"Unknown task: {task!r}")
+
+
+@app.get("/api/predict/samples/<dataset_id>")
+def predict_samples(dataset_id: str):
+    """List the pre-built test-set windows the frontend can offer for the
+    'try it yourself' picker on time-series datasets."""
+    from src import inference
+    try:
+        samples = inference.list_ts_samples(dataset_id)
+    except ValueError as exc:
+        abort(400, description=str(exc))
+    # Trim out raw windows (large) — frontend doesn't need them, just labels + ids.
+    return jsonify([
+        {k: v for k, v in s.items() if k != "window"}
+        for s in samples
+    ])
 
 
 # ── Error handlers ─────────────────────────────────────────────────────────
@@ -353,8 +433,12 @@ def not_implemented(err):
 
 
 if __name__ == "__main__":
+    import os
     print(f"\nResults dir: {RESULTS_DIR}")
     print(f"Plots dir:   {PLOTS_DIR}")
     print("CORS allowed:", ", ".join(ALLOWED_ORIGINS))
     print()
-    app.run(host="127.0.0.1", port=5050, debug=True)
+    # Default debug off — the reloader follows TensorFlow's lazy imports and
+    # restarts itself in a loop. Set FLASK_DEBUG=1 to opt in.
+    debug = os.environ.get("FLASK_DEBUG") == "1"
+    app.run(host="127.0.0.1", port=5050, debug=debug, use_reloader=False)

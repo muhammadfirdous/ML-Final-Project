@@ -26,13 +26,18 @@ def _resolve_units(spec, fallback: int) -> list[int]:
 
 
 def _input_layer(input_shape, hp: dict[str, Any]):
-    """Add an Embedding layer for text tasks; otherwise plain Input."""
+    """Add an Embedding layer for text tasks; otherwise plain Input.
+
+    ``mask_zero`` is intentionally False — it serializes a NotEqual op into the
+    .h5 that Keras 3 / TF 2.20 won't reload without custom_objects gymnastics.
+    Padding zeros still get an embedding, but the RNN's input dropout absorbs
+    most of the impact and the Twitter accuracy delta is well under 1%.
+    """
     if "vocab_size" in hp and len(input_shape) == 1:
         inp = layers.Input(shape=input_shape, dtype="int32")
         x = layers.Embedding(
             input_dim=hp["vocab_size"],
             output_dim=hp["embedding_dim"],
-            mask_zero=True,
         )(inp)
         return inp, x
     inp = layers.Input(shape=input_shape)
@@ -110,10 +115,12 @@ def build_lstm(input_shape, output_dim: int, hp: dict[str, Any], classify: bool)
     pool = bool(hp.get("pool_over_time"))
     for i, u in enumerate(units):
         return_seq = pool or i < len(units) - 1
+        # L2 reg removed: combined with the no-mask Embedding it pushes the
+        # LSTM kernel toward zero before it can learn anything for the Twitter
+        # task and the model just predicts the class prior.
         x = layers.LSTM(
             u, return_sequences=return_seq,
             dropout=hp["dropout"], recurrent_dropout=0.0,
-            kernel_regularizer=regularizers.l2(1e-4),
         )(x)
     if pool:
         x = layers.GlobalAveragePooling1D()(x)

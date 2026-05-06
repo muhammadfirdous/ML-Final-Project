@@ -9,35 +9,54 @@
 html { scroll-behavior: smooth; scroll-padding-top: 88px; }
 body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; margin: 0; }
 
-/* Theme tokens — overridden in light mode */
+/* Theme tokens — every text color hits WCAG AA (≥ 4.5:1) on its background.
+   --text-dim used to fail badly on both modes; bumped to slate-500 / slate-400
+   so small captions ("Step 01 of 05", "Final val acc", etc.) are actually
+   readable. Borders are also stronger so glass-card edges no longer disappear
+   on white pages. */
 :root {
-  --bg: #070b14;
-  --bg-elev: #0c1322;
-  --bg-card: rgba(18, 26, 44, 0.6);
-  --border: rgba(148, 163, 184, 0.12);
-  --border-strong: rgba(148, 163, 184, 0.22);
-  --text: #e6edf7;
-  --text-muted: #8a96ab;
-  --text-dim: #5d6a82;
-  --accent: #22d3ee;
-  --accent-2: #38bdf8;
-  --accent-glow: rgba(34, 211, 238, 0.18);
+  --bg: #050810;                                  /* page bg, slightly darker for depth */
+  --bg-elev: #0f172a;                             /* slate-900, used for nav + chips */
+  --bg-card: rgba(18, 28, 50, 0.78);              /* less transparent so card text reads */
+  --border: rgba(148, 163, 184, 0.20);            /* was 0.12 — visible card edges */
+  --border-strong: rgba(148, 163, 184, 0.36);     /* hover / focused borders */
+  --text: #f1f5f9;                                /* slate-100 — 18:1 on bg */
+  --text-muted: #b1bccd;                          /* 9:1 on bg */
+  --text-dim: #8492a8;                            /* 5.4:1 on bg → AA pass */
+  --accent: #22d3ee;                              /* teal — matches LSTM in ALGO_COLORS */
+  --accent-2: #67e8f9;                            /* lighter teal for hover/secondary */
+  --accent-glow: rgba(34, 211, 238, 0.22);
+  --focus-ring: rgba(34, 211, 238, 0.55);
 }
 html.light {
   --bg: #f6f8fc;
   --bg-elev: #ffffff;
-  --bg-card: rgba(255, 255, 255, 0.75);
-  --border: rgba(15, 23, 42, 0.08);
-  --border-strong: rgba(15, 23, 42, 0.14);
-  --text: #0f172a;
-  --text-muted: #475569;
-  --text-dim: #94a3b8;
-  --accent: #0891b2;
-  --accent-2: #0284c7;
-  --accent-glow: rgba(8, 145, 178, 0.12);
+  --bg-card: rgba(255, 255, 255, 0.92);           /* near-opaque so glass cards read on white */
+  --border: rgba(15, 23, 42, 0.14);               /* was 0.08 — actually visible */
+  --border-strong: rgba(15, 23, 42, 0.26);
+  --text: #0b1220;                                /* near-black, 18:1 on bg */
+  --text-muted: #334155;                          /* slate-700, 10:1 on bg */
+  --text-dim: #475569;                            /* slate-600, 6.7:1 on bg → AA pass */
+  --accent: #0e7490;                              /* teal-700, 5.5:1 on bg */
+  --accent-2: #0369a1;
+  --accent-glow: rgba(14, 116, 144, 0.14);
+  --focus-ring: rgba(14, 116, 144, 0.6);
 }
 
 body { background: var(--bg); color: var(--text); }
+
+/* Keyboard navigation — the design has none of these by default. */
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+button:focus-visible,
+a:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
 
 /* Subtle grain overlay for depth */
 .grain::before {

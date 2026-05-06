@@ -48,3 +48,39 @@ export async function postTrain(body) {
   });
   return res.json();
 }
+
+export async function predictText({ task, model, text }) {
+  const res = await fetch(`${API_BASE}/api/predict`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ task, model, text }),
+  });
+  if (!res.ok) throw new Error((await res.json()).message || `HTTP ${res.status}`);
+  return res.json();
+}
+
+export async function predictAudio({ model, file }) {
+  const fd = new FormData();
+  fd.append('task', 'speech');
+  fd.append('model', model);
+  fd.append('audio', file);
+  const res = await fetch(`${API_BASE}/api/predict`, { method: 'POST', body: fd });
+  if (!res.ok) throw new Error((await res.json()).message || `HTTP ${res.status}`);
+  return res.json();
+}
+
+export async function listTSSamples(datasetId) {
+  const res = await fetch(`${API_BASE}/api/predict/samples/${datasetId}`);
+  if (!res.ok) return [];
+  return res.json();
+}
+
+export async function predictTSSample({ datasetId, model, sampleId }) {
+  const res = await fetch(`${API_BASE}/api/predict`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ task: 'timeseries', datasetId, model, sampleId }),
+  });
+  if (!res.ok) throw new Error((await res.json()).message || `HTTP ${res.status}`);
+  return res.json();
+}

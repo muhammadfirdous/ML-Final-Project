@@ -20,23 +20,29 @@ from config import (
 
 
 # ── TESS (audio) ────────────────────────────────────────────────────────────
-def load_tess() -> tuple[list[Path], list[str]]:
-    """Scan every ACTRESS_<emotion>/ folder and return (wav_paths, emotion_labels).
+def load_tess() -> tuple[list[Path], list[str], list[str]]:
+    """Scan every ACTRESS_<emotion>/ folder and return
+    (wav_paths, emotion_labels, speaker_labels).
 
-    Emotion labels are the dashboard-facing strings (Angry/Disgust/.../Surprise),
-    derived from the folder suffix via EMOTION_LABEL_MAP.
+    Emotion labels are the dashboard-facing strings (Angry/Disgust/…/Surprise),
+    derived from the folder suffix via EMOTION_LABEL_MAP. Speaker is the
+    actress prefix in upper-case (e.g. "OAF" or "YAF") — used downstream to
+    enforce a speaker-independent train/test split so the model can't cheat
+    by memorising voice+sentence patterns.
     """
     if not TESS_DIR.exists():
         raise FileNotFoundError(f"TESS directory missing: {TESS_DIR}")
 
     wav_paths: list[Path] = []
     labels: list[str] = []
+    speakers: list[str] = []
     for sub in sorted(TESS_DIR.iterdir()):
         if not sub.is_dir():
             continue
         parts = sub.name.lower().split("_", 1)
         if len(parts) != 2:
             continue
+        speaker = parts[0].upper()
         emotion_key = parts[1]
         if emotion_key not in EMOTION_LABEL_MAP:
             continue
@@ -44,9 +50,10 @@ def load_tess() -> tuple[list[Path], list[str]]:
         for wav in sorted(sub.glob("*.wav")):
             wav_paths.append(wav)
             labels.append(label)
+            speakers.append(speaker)
     if not wav_paths:
         raise RuntimeError(f"No .wav files found under {TESS_DIR}")
-    return wav_paths, labels
+    return wav_paths, labels, speakers
 
 
 # ── Twitter (text) ──────────────────────────────────────────────────────────

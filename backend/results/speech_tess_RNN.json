@@ -3,98 +3,84 @@
   "datasetId": "tess",
   "model": "RNN",
   "metrics": {
-    "accuracy": 100,
-    "precision": 0.9965,
-    "recall": 0.9964,
-    "f1": 0.9964,
-    "auc": 1.0,
+    "accuracy": 50,
+    "precision": 0.539,
+    "recall": 0.5007,
+    "f1": 0.4773,
+    "auc": 0.8853,
     "params": "22,535",
-    "trainingTime": "1m 07s"
+    "trainingTime": "0m 19s"
   },
   "curve": [
     {
       "epoch": 1,
-      "trainLoss": 0.8704,
-      "valLoss": 0.3167,
-      "trainAcc": 0.758,
-      "valAcc": 0.9339
+      "trainLoss": 0.8651,
+      "valLoss": 2.0912,
+      "trainAcc": 0.7236,
+      "valAcc": 0.3743
     },
     {
       "epoch": 2,
-      "trainLoss": 0.3442,
-      "valLoss": 0.1932,
-      "trainAcc": 0.9183,
-      "valAcc": 0.975
+      "trainLoss": 0.6162,
+      "valLoss": 2.0372,
+      "trainAcc": 0.8257,
+      "valAcc": 0.3571
     },
     {
       "epoch": 3,
-      "trainLoss": 0.2506,
-      "valLoss": 0.0847,
-      "trainAcc": 0.9326,
-      "valAcc": 0.9839
+      "trainLoss": 0.4329,
+      "valLoss": 1.9053,
+      "trainAcc": 0.9093,
+      "valAcc": 0.4243
     },
     {
       "epoch": 4,
-      "trainLoss": 0.173,
-      "valLoss": 0.0534,
-      "trainAcc": 0.9549,
-      "valAcc": 0.9875
+      "trainLoss": 0.2779,
+      "valLoss": 1.9062,
+      "trainAcc": 0.9379,
+      "valAcc": 0.4793
     },
     {
       "epoch": 5,
-      "trainLoss": 0.2565,
-      "valLoss": 0.106,
-      "trainAcc": 0.9312,
-      "valAcc": 0.9857
+      "trainLoss": 0.3321,
+      "valLoss": 1.2063,
+      "trainAcc": 0.9093,
+      "valAcc": 0.5007
     },
     {
       "epoch": 6,
-      "trainLoss": 0.1747,
-      "valLoss": 0.0542,
-      "trainAcc": 0.9531,
-      "valAcc": 0.9893
+      "trainLoss": 0.2316,
+      "valLoss": 1.9507,
+      "trainAcc": 0.9407,
+      "valAcc": 0.4379
     },
     {
       "epoch": 7,
-      "trainLoss": 0.1497,
-      "valLoss": 0.0372,
-      "trainAcc": 0.9585,
-      "valAcc": 0.9964
+      "trainLoss": 0.1661,
+      "valLoss": 1.8887,
+      "trainAcc": 0.9679,
+      "valAcc": 0.5336
     },
     {
       "epoch": 8,
       "trainLoss": 0.1372,
-      "valLoss": 0.0474,
-      "trainAcc": 0.9629,
-      "valAcc": 0.9946
+      "valLoss": 2.185,
+      "trainAcc": 0.9614,
+      "valAcc": 0.4864
     },
     {
       "epoch": 9,
-      "trainLoss": 0.1613,
-      "valLoss": 0.1645,
-      "trainAcc": 0.9527,
-      "valAcc": 0.9625
+      "trainLoss": 0.1131,
+      "valLoss": 2.1081,
+      "trainAcc": 0.9707,
+      "valAcc": 0.54
     },
     {
       "epoch": 10,
-      "trainLoss": 0.3944,
-      "valLoss": 0.2219,
-      "trainAcc": 0.9036,
-      "valAcc": 0.975
-    },
-    {
-      "epoch": 11,
-      "trainLoss": 0.3183,
-      "valLoss": 0.1539,
-      "trainAcc": 0.9098,
-      "valAcc": 0.9661
-    },
-    {
-      "epoch": 12,
-      "trainLoss": 0.2332,
-      "valLoss": 0.1042,
-      "trainAcc": 0.9375,
-      "valAcc": 0.9768
+      "trainLoss": 0.096,
+      "valLoss": 2.3512,
+      "trainAcc": 0.975,
+      "valAcc": 0.5036
     }
   ],
   "classify": true,
@@ -133,30 +119,30 @@
       1.0
     ],
     "tpr": [
-      0.9857,
-      1.0,
-      1.0,
-      1.0,
-      1.0,
-      1.0,
-      1.0,
-      1.0,
-      1.0,
-      1.0,
-      1.0,
-      1.0,
-      1.0,
-      1.0,
-      1.0,
-      1.0,
-      1.0,
-      1.0,
-      1.0,
-      1.0,
-      1.0,
-      1.0,
-      1.0,
-      1.0,
+      0.19,
+      0.4571,
+      0.5657,
+      0.6593,
+      0.7136,
+      0.7657,
+      0.795,
+      0.8214,
+      0.8429,
+      0.8571,
+      0.8721,
+      0.89,
+      0.9043,
+      0.9236,
+      0.9471,
+      0.9636,
+      0.9786,
+      0.9829,
+      0.9907,
+      0.9943,
+      0.9979,
+      0.9979,
+      0.9993,
+      0.9993,
       1.0,
       1.0,
       1.0,
@@ -165,70 +151,70 @@
       1.0,
       1.0
     ],
-    "auc": 1.0
+    "auc": 0.8853
   },
   "confusion": [
     [
-      79,
+      198,
       0,
       1,
       0,
       0,
       0,
-      0
-    ],
-    [
-      0,
-      80,
-      0,
-      0,
-      0,
-      0,
-      0
-    ],
-    [
-      0,
-      0,
-      80,
-      0,
-      0,
-      0,
-      0
-    ],
-    [
-      0,
-      0,
-      0,
-      79,
-      0,
-      0,
       1
     ],
     [
+      70,
+      93,
+      2,
+      3,
       0,
-      0,
-      0,
-      0,
-      80,
-      0,
-      0
+      8,
+      24
     ],
     [
       0,
       0,
+      132,
+      55,
       0,
       0,
+      13
+    ],
+    [
+      162,
       0,
-      80,
-      0
+      32,
+      1,
+      0,
+      0,
+      5
     ],
     [
       0,
+      14,
+      0,
+      0,
+      167,
+      12,
+      7
+    ],
+    [
+      34,
+      136,
       0,
       0,
       0,
+      30,
+      0
+    ],
+    [
+      37,
+      1,
+      1,
+      80,
       0,
-      0,
+      1,
       80
     ]
   ],

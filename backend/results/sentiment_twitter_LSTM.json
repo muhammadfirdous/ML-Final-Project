@@ -3,77 +3,119 @@
   "datasetId": "twitter",
   "model": "LSTM",
   "metrics": {
-    "accuracy": 94,
-    "precision": 0.937,
-    "recall": 0.9334,
-    "f1": 0.9349,
-    "auc": 0.9914,
+    "accuracy": 93,
+    "precision": 0.9317,
+    "recall": 0.9277,
+    "f1": 0.9294,
+    "auc": 0.9908,
     "params": "2.57M",
-    "trainingTime": "8m 28s"
+    "trainingTime": "14m 52s"
   },
   "curve": [
     {
       "epoch": 1,
-      "trainLoss": 0.84,
-      "valLoss": 0.3306,
-      "trainAcc": 0.6725,
-      "valAcc": 0.888
+      "trainLoss": 1.3686,
+      "valLoss": 1.3736,
+      "trainAcc": 0.2979,
+      "valAcc": 0.266
     },
     {
       "epoch": 2,
-      "trainLoss": 0.4027,
-      "valLoss": 0.2353,
-      "trainAcc": 0.8581,
-      "valAcc": 0.928
+      "trainLoss": 1.3677,
+      "valLoss": 1.3732,
+      "trainAcc": 0.3007,
+      "valAcc": 0.267
     },
     {
       "epoch": 3,
-      "trainLoss": 0.2983,
-      "valLoss": 0.2499,
-      "trainAcc": 0.8955,
-      "valAcc": 0.932
+      "trainLoss": 1.3675,
+      "valLoss": 1.374,
+      "trainAcc": 0.3014,
+      "valAcc": 0.266
     },
     {
       "epoch": 4,
-      "trainLoss": 0.2521,
-      "valLoss": 0.2322,
-      "trainAcc": 0.9108,
-      "valAcc": 0.936
+      "trainLoss": 1.3671,
+      "valLoss": 1.3739,
+      "trainAcc": 0.3022,
+      "valAcc": 0.267
     },
     {
       "epoch": 5,
-      "trainLoss": 0.2215,
-      "valLoss": 0.2563,
-      "trainAcc": 0.921,
-      "valAcc": 0.931
+      "trainLoss": 1.365,
+      "valLoss": 1.3743,
+      "trainAcc": 0.3083,
+      "valAcc": 0.266
     },
     {
       "epoch": 6,
-      "trainLoss": 0.2007,
-      "valLoss": 0.2742,
-      "trainAcc": 0.9283,
-      "valAcc": 0.935
+      "trainLoss": 1.3671,
+      "valLoss": 1.3745,
+      "trainAcc": 0.3019,
+      "valAcc": 0.267
     },
     {
       "epoch": 7,
-      "trainLoss": 0.1853,
-      "valLoss": 0.2995,
-      "trainAcc": 0.9335,
-      "valAcc": 0.926
+      "trainLoss": 1.2118,
+      "valLoss": 0.7576,
+      "trainAcc": 0.4356,
+      "valAcc": 0.706
     },
     {
       "epoch": 8,
-      "trainLoss": 0.1728,
-      "valLoss": 0.3145,
-      "trainAcc": 0.9369,
-      "valAcc": 0.931
+      "trainLoss": 0.6299,
+      "valLoss": 0.3199,
+      "trainAcc": 0.7638,
+      "valAcc": 0.902
     },
     {
       "epoch": 9,
-      "trainLoss": 0.1618,
-      "valLoss": 0.303,
-      "trainAcc": 0.9402,
-      "valAcc": 0.939
+      "trainLoss": 0.3746,
+      "valLoss": 0.232,
+      "trainAcc": 0.8634,
+      "valAcc": 0.932
+    },
+    {
+      "epoch": 10,
+      "trainLoss": 0.2831,
+      "valLoss": 0.2151,
+      "trainAcc": 0.8952,
+      "valAcc": 0.932
+    },
+    {
+      "epoch": 11,
+      "trainLoss": 0.2378,
+      "valLoss": 0.2294,
+      "trainAcc": 0.9106,
+      "valAcc": 0.927
+    },
+    {
+      "epoch": 12,
+      "trainLoss": 0.2113,
+      "valLoss": 0.2348,
+      "trainAcc": 0.9208,
+      "valAcc": 0.928
+    },
+    {
+      "epoch": 13,
+      "trainLoss": 0.1901,
+      "valLoss": 0.2361,
+      "trainAcc": 0.9279,
+      "valAcc": 0.937
+    },
+    {
+      "epoch": 14,
+      "trainLoss": 0.1741,
+      "valLoss": 0.2527,
+      "trainAcc": 0.9328,
+      "valAcc": 0.932
+    },
+    {
+      "epoch": 15,
+      "trainLoss": 0.1635,
+      "valLoss": 0.2445,
+      "trainAcc": 0.9371,
+      "valAcc": 0.933
     }
   ],
   "classify": true,
@@ -112,70 +154,70 @@
       1.0
     ],
     "tpr": [
-      0.592,
-      0.9518,
-      0.968,
-      0.979,
-      0.9831,
-      0.9867,
-      0.989,
-      0.994,
-      0.9949,
-      0.9959,
-      0.9959,
-      0.9973,
-      0.9982,
-      0.9982,
+      0.4996,
+      0.9472,
+      0.9642,
+      0.982,
+      0.9838,
+      0.9903,
+      0.9903,
+      0.992,
+      0.992,
+      0.9935,
+      0.9967,
+      0.9976,
+      0.9976,
+      0.9976,
       0.9991,
       0.9991,
-      1.0,
-      1.0,
-      1.0,
-      1.0,
-      1.0,
-      1.0,
-      1.0,
-      1.0,
-      1.0,
-      1.0,
+      0.9991,
+      0.9991,
+      0.9991,
+      0.9991,
+      0.9991,
+      0.9991,
+      0.9991,
+      0.9991,
+      0.9991,
+      0.9991,
       1.0,
       1.0,
       1.0,
       1.0,
       1.0
     ],
-    "auc": 0.9914
+    "auc": 0.9908
   },
   "confusion": [
     [
-      156,
-      5,
-      3,
-      8
+      152,
+      4,
+      6,
+      10
     ],
     [
-      2,
-      256,
+      1,
+      253,
       3,
-      5
+      9
     ],
     [
-      2,
       9,
-      271,
-      3
+      8,
+      262,
+      6
     ],
     [
+      2,
       5,
-      8,
-      11,
-      253
+      5,
+      265
     ]
   ],
   "classes": [
-    "Positive",
+    "Irrelevant",
     "Negative",
     "Neutral",
-    "Irrelevant"
+    "Positive"
   ]
 }

@@ -41,13 +41,34 @@ def _make_windows(values: np.ndarray, target_idx: int, window: int):
 
 
 # ── TESS speech ─────────────────────────────────────────────────────────────
-def prep_tess(wav_paths: list[Path], labels: list[str], hp: dict[str, Any]) -> dict[str, Any]:
-    """librosa load → resample → 40 MFCC → pad/truncate to max_frames → label encode."""
+TRAIN_SPEAKER = "OAF"   # held in for training
+VAL_SPEAKER = "YAF"     # held out for evaluation
+
+
+def prep_tess(
+    wav_paths: list[Path],
+    labels: list[str],
+    hp: dict[str, Any],
+    speakers: list[str] | None = None,
+) -> dict[str, Any]:
+    """librosa load → 40 MFCC → pad/truncate → speaker-independent split.
+
+    TESS contains only two actresses (OAF, YAF) reading the same 200 sentences,
+    so a stratified random split lets the model memorise voice patterns and
+    drift to ~100% — that's not real emotion recognition. We hold out one
+    speaker entirely (YAF) and train on the other (OAF). MFCC z-score stats
+    are also computed from the train portion only so the val data is genuinely
+    unseen.
+    """
     import librosa  # heavy import, lazy
 
     sr_target = hp["sample_rate"]
     n_mfcc = hp["n_mfcc"]
     max_frames = hp["max_frames"]
+
+    if speakers is None:
+        # Backwards compat — assume all training speaker if no info.
+        speakers = [TRAIN_SPEAKER] * len(wav_paths)
 
     feats: list[np.ndarray] = []
     print(f"[TESS] extracting MFCCs from {len(wav_paths)} wav files…")
@@ -60,44 +81,37 @@ def prep_tess(wav_paths: list[Path], labels: list[str], hp: dict[str, Any]) -> d
             pad = np.zeros((max_frames - m.shape[0], n_mfcc), dtype=np.float32)
             m = np.concatenate([m, pad], axis=0)
         feats.append(m.astype(np.float32))
-        if i % 200 == 0:
+        if i % 400 == 0:
             print(f"[TESS]   {i}/{len(wav_paths)} done")
     X = np.stack(feats)  # (N, max_frames, n_mfcc)
-    # Z-score per MFCC coefficient using ALL frames — raw MFCCs span ~[-700, 200]
-    # which saturates RNN gating (especially GRU). Without this, GRU stays at
-    # chance for the entire training run.
-    mu = X.mean(axis=(0, 1), keepdims=True)
-    sigma = X.std(axis=(0, 1), keepdims=True) + 1e-6
-    X = ((X - mu) / sigma).astype(np.float32)
 
     classes = sorted(set(labels))
-    le = LabelEncoder()
-    le.fit(classes)
+    le = LabelEncoder().fit(classes)
     y = le.transform(labels)
-    n_classes = len(classes)
 
-    # Stratified 80/20 split.
-    rng = np.random.default_rng(42)
-    idxs_per_class = {c: np.where(y == le.transform([c])[0])[0] for c in classes}
-    train_idx, val_idx = [], []
-    for c, idxs in idxs_per_class.items():
-        idxs = idxs.copy()
-        rng.shuffle(idxs)
-        cut = int(0.8 * len(idxs))
-        train_idx.extend(idxs[:cut])
-        val_idx.extend(idxs[cut:])
-    train_idx = np.array(train_idx)
-    val_idx = np.array(val_idx)
-    rng.shuffle(train_idx)
-    rng.shuffle(val_idx)
+    speakers_arr = np.array(speakers)
+    train_mask = speakers_arr == TRAIN_SPEAKER
+    val_mask = speakers_arr == VAL_SPEAKER
+    if train_mask.sum() == 0 or val_mask.sum() == 0:
+        raise RuntimeError(
+            f"Speaker-independent split needs both {TRAIN_SPEAKER} and {VAL_SPEAKER} "
+            f"folders; got speakers={set(speakers)}"
+        )
+
+    # Z-score per coefficient using ONLY the training speaker so val is genuinely
+    # out-of-distribution. Without normalisation, GRU's sigmoid gates saturate.
+    X_train_raw = X[train_mask]
+    mu = X_train_raw.mean(axis=(0, 1), keepdims=True)
+    sigma = X_train_raw.std(axis=(0, 1), keepdims=True) + 1e-6
+    X = ((X - mu) / sigma).astype(np.float32)
 
     return {
-        "X_train": X[train_idx],
-        "y_train": y[train_idx],
-        "X_val":   X[val_idx],
-        "y_val":   y[val_idx],
+        "X_train": X[train_mask],
+        "y_train": y[train_mask],
+        "X_val":   X[val_mask],
+        "y_val":   y[val_mask],
         "input_shape": (max_frames, n_mfcc),
-        "output_dim": n_classes,
+        "output_dim": len(classes),
         "classify": True,
         "classes": classes,
         "scaler": None,
@@ -146,8 +160,10 @@ def prep_twitter(train_df: pd.DataFrame, val_df: pd.DataFrame, hp: dict[str, Any
     train_texts = [_clean_tweet(t, stops) for t in train_df["text"].astype(str)]
     val_texts = [_clean_tweet(t, stops) for t in val_df["text"].astype(str)]
 
-    classes = ["Positive", "Negative", "Neutral", "Irrelevant"]
-    le = LabelEncoder().fit(classes)
+    # LabelEncoder sorts alphabetically; align ``classes`` to its real order
+    # so downstream argmax → class-name lookup is correct.
+    le = LabelEncoder().fit(["Positive", "Negative", "Neutral", "Irrelevant"])
+    classes = list(le.classes_)  # → ['Irrelevant', 'Negative', 'Neutral', 'Positive']
     y_train = le.transform(train_df["sentiment"].astype(str))
     y_val = le.transform(val_df["sentiment"].astype(str))
 
@@ -324,11 +340,272 @@ def prep_weather_classification(
     }
 
 
+# ── Artifact builders (for inference; pickleable subset of preprocess output) ──
+def build_artifacts_speech(hp: dict[str, Any]) -> dict[str, Any]:
+    """Compute (mfcc_mean, mfcc_std, classes) from the TRAIN speaker (OAF)
+    only. Inference uses these same stats for any user audio.
+    Slow (~3-5 min on CPU) but runs once — pickled and reused."""
+    from src.data_loader import load_tess
+    import librosa  # noqa: WPS433
+
+    wav_paths, labels, speakers = load_tess()
+    n_mfcc = hp["n_mfcc"]
+    max_frames = hp["max_frames"]
+    sr_target = hp["sample_rate"]
+
+    train_feats: list[np.ndarray] = []
+    print(f"[artifacts/tess] extracting MFCCs from {len(wav_paths)} clips "
+          f"(stats computed from {TRAIN_SPEAKER} only)…")
+    for i, (p, sp) in enumerate(zip(wav_paths, speakers), 1):
+        if sp != TRAIN_SPEAKER:
+            continue
+        y, sr = librosa.load(p, sr=sr_target, mono=True)
+        m = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=n_mfcc).T
+        if m.shape[0] >= max_frames:
+            m = m[:max_frames]
+        else:
+            pad = np.zeros((max_frames - m.shape[0], n_mfcc), dtype=np.float32)
+            m = np.concatenate([m, pad], axis=0)
+        train_feats.append(m.astype(np.float32))
+        if i % 400 == 0:
+            print(f"[artifacts/tess]   {i}/{len(wav_paths)}")
+    X_train = np.stack(train_feats)
+    mu = X_train.mean(axis=(0, 1), keepdims=True).astype(np.float32)
+    sigma = (X_train.std(axis=(0, 1), keepdims=True) + 1e-6).astype(np.float32)
+
+    return {
+        "mfcc_mean": mu,
+        "mfcc_std": sigma,
+        "classes": sorted(set(labels)),
+        "max_frames": max_frames,
+        "n_mfcc": n_mfcc,
+        "sample_rate": sr_target,
+        "train_speaker": TRAIN_SPEAKER,
+        "val_speaker": VAL_SPEAKER,
+    }
+
+
+def build_artifacts_sentiment(hp: dict[str, Any]) -> dict[str, Any]:
+    from tensorflow.keras.preprocessing.text import Tokenizer
+
+    from src.data_loader import load_twitter
+
+    train_df, _ = load_twitter()
+    stops = _load_stopwords()
+    train_texts = [_clean_tweet(t, stops) for t in train_df["text"].astype(str)]
+
+    tokenizer = Tokenizer(num_words=hp["vocab_size"], oov_token="<oov>")
+    tokenizer.fit_on_texts(train_texts)
+
+    le = LabelEncoder().fit(["Positive", "Negative", "Neutral", "Irrelevant"])
+    return {
+        "tokenizer": tokenizer,
+        "classes": list(le.classes_),
+        "max_seq_len": hp["max_seq_len"],
+        "vocab_size": hp["vocab_size"],
+    }
+
+
+def build_artifacts_timeseries(dataset_id: str, hp: dict[str, Any]) -> dict[str, Any]:
+    """For each TS dataset return the fitted scaler + feature config so a single
+    user-supplied window (or one drawn from the test set) can be predicted
+    without re-running the full preprocessing pipeline."""
+    from src.data_loader import load_corgis, load_daily_climate, load_seattle
+
+    window = hp["window_size"]
+
+    if dataset_id == "corgis":
+        df = load_corgis()
+        target_col = "avg_temp"
+        feature_cols = ["precipitation", "avg_temp", "max_temp", "min_temp",
+                        "wind_direction", "wind_speed"]
+        cols = list(feature_cols)
+        if target_col not in cols:
+            cols.insert(0, target_col)
+        target_idx = cols.index(target_col)
+        df = df.copy()
+        df[cols] = df[cols].ffill().bfill().fillna(0.0)
+        # Train portion of every station → fit scaler.
+        train_chunks: list[np.ndarray] = []
+        for _, sub in df.groupby("station", sort=True):
+            vals = sub[cols].values.astype(np.float32)
+            if len(vals) < window + 2:
+                continue
+            cut = int(len(vals) * 0.8)
+            train_chunks.append(vals[:cut])
+        scaler = MinMaxScaler().fit(np.concatenate(train_chunks, axis=0))
+        # Pre-compute val windows so the frontend can offer "pick a sample".
+        sample_windows = _ts_collect_windows(df, "station", cols, scaler, window, target_idx, n_samples=8)
+        return {
+            "scaler": scaler,
+            "feature_cols": feature_cols,
+            "all_cols": cols,
+            "target_idx": target_idx,
+            "target_col": target_col,
+            "window_size": window,
+            "classify": False,
+            "classes": None,
+            "sample_windows": sample_windows,
+        }
+
+    if dataset_id == "climate":
+        train_df, test_df = load_daily_climate()
+        full = pd.concat([train_df, test_df], ignore_index=True).copy()
+        target_col = "meantemp"
+        feature_cols = ["meantemp", "humidity", "wind_speed", "meanpressure"]
+        cols = list(feature_cols)
+        if target_col not in cols:
+            cols.insert(0, target_col)
+        target_idx = cols.index(target_col)
+        full[cols] = full[cols].ffill().bfill().fillna(0.0)
+        cut = int(len(full) * 0.8)
+        scaler = MinMaxScaler().fit(full[cols].values[:cut].astype(np.float32))
+        sample_windows = _ts_collect_windows(full, None, cols, scaler, window, target_idx, n_samples=8)
+        return {
+            "scaler": scaler,
+            "feature_cols": feature_cols,
+            "all_cols": cols,
+            "target_idx": target_idx,
+            "target_col": target_col,
+            "window_size": window,
+            "classify": False,
+            "classes": None,
+            "sample_windows": sample_windows,
+        }
+
+    if dataset_id == "seattle":
+        df = load_seattle().copy()
+        feature_cols = ["precipitation", "temp_max", "temp_min", "wind"]
+        df[feature_cols] = df[feature_cols].ffill().bfill().fillna(0.0)
+        classes = sorted(df["weather"].dropna().unique().tolist())
+        cut = int(len(df) * 0.8)
+        scaler = MinMaxScaler().fit(df[feature_cols].values[:cut].astype(np.float32))
+        # Pre-pad sample windows from the val portion.
+        feats = scaler.transform(df[feature_cols].values.astype(np.float32))
+        labels_all = LabelEncoder().fit(classes).transform(df["weather"].astype(str))
+        cut_w = max(0, cut - window)
+        val_windows = []
+        for i, idx in enumerate(range(cut_w, len(feats) - window)):
+            if i >= 8:
+                break
+            val_windows.append({
+                "id": int(idx),
+                "label": "Day-of-test #{}".format(i + 1),
+                "window": feats[idx : idx + window].tolist(),
+                "actualClass": classes[int(labels_all[idx + window])],
+                "date": str(df["date"].iloc[idx + window].date()),
+            })
+        return {
+            "scaler": scaler,
+            "feature_cols": feature_cols,
+            "all_cols": feature_cols,
+            "target_idx": None,
+            "target_col": "weather",
+            "window_size": window,
+            "classify": True,
+            "classes": classes,
+            "sample_windows": val_windows,
+        }
+
+    raise ValueError(f"Unknown timeseries dataset_id: {dataset_id!r}")
+
+
+def _ts_collect_windows(df, group_col, cols, scaler, window, target_idx, n_samples=8):
+    """Collect (id, label, window, actual) tuples from the val portion of the
+    dataset so the frontend can offer 'pick a sample'.
+
+    With ``group_col`` (e.g. CORGIS by station): one sample per station, up to
+    n_samples. Without grouping (Climate, Seattle classification): multiple
+    samples spaced across the val window so the picker isn't a single option.
+    """
+    out: list[dict[str, Any]] = []
+    if group_col is None:
+        # Single time series — sample at evenly-spaced offsets through the val
+        # portion. The first val target sits at ``cut``; subsequent windows
+        # advance by ``stride`` steps.
+        vals = df[cols].values.astype(np.float32)
+        if len(vals) < window + 2:
+            return out
+        cut = int(len(vals) * 0.8)
+        scaled = scaler.transform(vals)
+        n_val = len(scaled) - cut
+        if n_val < 1:
+            return out
+        # Pick up to n_samples evenly-spaced offsets in [0, n_val-1].
+        step = max(1, n_val // n_samples)
+        offsets = [i * step for i in range(n_samples) if i * step < n_val]
+        for sample_idx, off in enumerate(offsets):
+            target_pos = cut + off
+            start = target_pos - window
+            if start < 0 or target_pos >= len(scaled):
+                continue
+            win = scaled[start : target_pos]
+            if len(win) != window:
+                continue
+            actual = float(vals[target_pos, target_idx])
+            date_str = ""
+            if "date" in df.columns:
+                d = df["date"].iloc[target_pos]
+                if hasattr(d, "strftime"):
+                    date_str = d.strftime("%Y-%m-%d")
+            label = f"Test set — {date_str}" if date_str else f"Test set — sample {sample_idx + 1}"
+            out.append({
+                "id": f"sample-{sample_idx}",
+                "label": label,
+                "window": win.tolist(),
+                "actual": round(actual, 2),
+            })
+        return out
+
+    # Grouped (per-station) — one window per station.
+    groups = list(df.groupby(group_col, sort=True))
+    sample_idx = 0
+    for gid, sub in groups:
+        vals = sub[cols].values.astype(np.float32)
+        if len(vals) < window + 2:
+            continue
+        cut = int(len(vals) * 0.8)
+        if cut + 1 >= len(vals):
+            continue
+        scaled = scaler.transform(vals)
+        win = scaled[cut - window : cut]
+        if len(win) != window:
+            continue
+        actual_unscaled = float(vals[cut, target_idx])
+        label = f"{gid} — {sub['date'].iloc[cut].strftime('%Y-%m-%d')}" \
+            if "date" in sub.columns and hasattr(sub['date'].iloc[cut], 'strftime') \
+            else f"{gid} — sample {sample_idx + 1}"
+        out.append({
+            "id": str(gid),
+            "label": label,
+            "window": win.tolist(),
+            "actual": round(actual_unscaled, 2),
+        })
+        sample_idx += 1
+        if sample_idx >= n_samples:
+            break
+    return out
+
+
+def build_artifacts(task: str, dataset_id: str, hp: dict[str, Any]) -> dict[str, Any]:
+    if task == "speech":
+        return build_artifacts_speech(hp)
+    if task == "sentiment":
+        return build_artifacts_sentiment(hp)
+    if task == "timeseries":
+        return build_artifacts_timeseries(dataset_id, hp)
+    raise ValueError(f"Unknown task: {task!r}")
+
+
 # ── Dispatch helper ────────────────────────────────────────────────────────
 def preprocess(task: str, dataset_id: str, raw, hp: dict[str, Any]) -> dict[str, Any]:
     if task == "speech" and dataset_id == "tess":
-        wav_paths, labels = raw
-        return prep_tess(wav_paths, labels, hp)
+        if len(raw) == 3:
+            wav_paths, labels, speakers = raw
+        else:  # backwards compat
+            wav_paths, labels = raw
+            speakers = None
+        return prep_tess(wav_paths, labels, hp, speakers=speakers)
     if task == "sentiment" and dataset_id == "twitter":
         train_df, val_df = raw
         return prep_twitter(train_df, val_df, hp)

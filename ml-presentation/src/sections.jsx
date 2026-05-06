@@ -7,6 +7,7 @@ import { Icon } from './Icon.jsx';
 import {
   Card, Reveal, SectionHeader, StatBadge, HeroWaveform, ChartTooltip,
 } from './components.jsx';
+import { TryItSentiment, TryItSpeech, TryItTimeSeries } from './TryItPanel.jsx';
 import { useDashboard } from './data/DashboardContext.jsx';
 
 // Pull the globals (ALGO_COLORS, ALGO_FULL, TEAM, etc.) once from context so
@@ -664,6 +665,19 @@ export function ClassificationTaskSection({ task, sectionId }) {
             </Reveal>
           </div>
         </div>
+
+        {/* ── Live demo ───────────────────────────────────────────────── */}
+        <div className="mt-20">
+          <Reveal>
+            <SectionHeader kicker="Live demo" title="Run the trained model on your own input"
+              subtitle="Pick an algorithm, hand it real data, see what it predicts." />
+          </Reveal>
+          <Reveal delay={120}>
+            {task.id === 'speech'
+              ? <TryItSpeech    algos={task.algos} />
+              : <TryItSentiment algos={task.algos} />}
+          </Reveal>
+        </div>
       </div>
     </section>
   );
@@ -830,6 +844,17 @@ export function TimeSeriesTaskSection({ task }) {
           </Reveal>
           <Reveal delay={140} key={'rt-' + activeDs}>
             <ResultsTable algos={ds.algos} metrics={ds.metrics} bestId={winnerId} columns={cols} />
+          </Reveal>
+        </div>
+
+        {/* ── Live demo ───────────────────────────────────────────────── */}
+        <div className="mt-20">
+          <Reveal>
+            <SectionHeader kicker="Live demo" title="Forecast a held-out window"
+              subtitle="Pick a sample from the test set; the trained model returns its prediction (and we show the actual value alongside)." />
+          </Reveal>
+          <Reveal delay={120} key={'try-' + activeDs + activeModel}>
+            <TryItTimeSeries datasetId={ds.id} algos={ds.algos} classify={isClassify} />
           </Reveal>
         </div>
       </div>
