@@ -1,0 +1,270 @@
+{
+  "task": "timeseries",
+  "datasetId": "seattle",
+  "model": "GRU",
+  "metrics": {
+    "accuracy": 59,
+    "precision": 0.3045,
+    "recall": 0.3493,
+    "f1": 0.3153,
+    "auc": null,
+    "params": "50,645",
+    "trainingTime": "0m 24s"
+  },
+  "curve": [
+    {
+      "epoch": 1,
+      "trainLoss": 1.2247,
+      "valLoss": 1.0676,
+      "trainAcc": 0.442,
+      "valAcc": 0.6314
+    },
+    {
+      "epoch": 2,
+      "trainLoss": 1.0934,
+      "valLoss": 1.0494,
+      "trainAcc": 0.4895,
+      "valAcc": 0.628
+    },
+    {
+      "epoch": 3,
+      "trainLoss": 1.0974,
+      "valLoss": 1.0323,
+      "trainAcc": 0.5044,
+      "valAcc": 0.6246
+    },
+    {
+      "epoch": 4,
+      "trainLoss": 1.0801,
+      "valLoss": 1.0349,
+      "trainAcc": 0.5369,
+      "valAcc": 0.5836
+    },
+    {
+      "epoch": 5,
+      "trainLoss": 1.0778,
+      "valLoss": 1.0288,
+      "trainAcc": 0.5,
+      "valAcc": 0.6143
+    },
+    {
+      "epoch": 6,
+      "trainLoss": 1.0711,
+      "valLoss": 1.0194,
+      "trainAcc": 0.5334,
+      "valAcc": 0.6348
+    },
+    {
+      "epoch": 7,
+      "trainLoss": 1.0599,
+      "valLoss": 1.0055,
+      "trainAcc": 0.5369,
+      "valAcc": 0.6314
+    },
+    {
+      "epoch": 8,
+      "trainLoss": 1.0593,
+      "valLoss": 1.0046,
+      "trainAcc": 0.5308,
+      "valAcc": 0.6485
+    },
+    {
+      "epoch": 9,
+      "trainLoss": 1.0557,
+      "valLoss": 1.0134,
+      "trainAcc": 0.5193,
+      "valAcc": 0.6416
+    },
+    {
+      "epoch": 10,
+      "trainLoss": 1.0496,
+      "valLoss": 0.9978,
+      "trainAcc": 0.5378,
+      "valAcc": 0.6382
+    },
+    {
+      "epoch": 11,
+      "trainLoss": 1.0451,
+      "valLoss": 1.0087,
+      "trainAcc": 0.5369,
+      "valAcc": 0.6109
+    },
+    {
+      "epoch": 12,
+      "trainLoss": 1.0447,
+      "valLoss": 0.9988,
+      "trainAcc": 0.5325,
+      "valAcc": 0.6485
+    },
+    {
+      "epoch": 13,
+      "trainLoss": 1.0438,
+      "valLoss": 0.997,
+      "trainAcc": 0.5677,
+      "valAcc": 0.6451
+    },
+    {
+      "epoch": 14,
+      "trainLoss": 1.0463,
+      "valLoss": 1.0085,
+      "trainAcc": 0.5395,
+      "valAcc": 0.6075
+    },
+    {
+      "epoch": 15,
+      "trainLoss": 1.0127,
+      "valLoss": 0.9951,
+      "trainAcc": 0.5668,
+      "valAcc": 0.5904
+    },
+    {
+      "epoch": 16,
+      "trainLoss": 1.0338,
+      "valLoss": 1.0102,
+      "trainAcc": 0.5589,
+      "valAcc": 0.6041
+    },
+    {
+      "epoch": 17,
+      "trainLoss": 1.0298,
+      "valLoss": 1.0116,
+      "trainAcc": 0.5659,
+      "valAcc": 0.6007
+    },
+    {
+      "epoch": 18,
+      "trainLoss": 1.0232,
+      "valLoss": 1.0046,
+      "trainAcc": 0.565,
+      "valAcc": 0.6041
+    },
+    {
+      "epoch": 19,
+      "trainLoss": 1.0136,
+      "valLoss": 1.0101,
+      "trainAcc": 0.5677,
+      "valAcc": 0.5939
+    },
+    {
+      "epoch": 20,
+      "trainLoss": 1.0186,
+      "valLoss": 1.0239,
+      "trainAcc": 0.5606,
+      "valAcc": 0.5631
+    }
+  ],
+  "classify": true,
+  "roc": {
+    "fpr": [
+      0.0,
+      0.0333,
+      0.0667,
+      0.1,
+      0.1333,
+      0.1667,
+      0.2,
+      0.2333,
+      0.2667,
+      0.3,
+      0.3333,
+      0.3667,
+      0.4,
+      0.4333,
+      0.4667,
+      0.5,
+      0.5333,
+      0.5667,
+      0.6,
+      0.6333,
+      0.6667,
+      0.7,
+      0.7333,
+      0.7667,
+      0.8,
+      0.8333,
+      0.8667,
+      0.9,
+      0.9333,
+      0.9667,
+      1.0
+    ],
+    "tpr": [
+      0.0486,
+      0.1313,
+      0.1732,
+      0.2151,
+      0.2844,
+      0.3698,
+      0.4174,
+      0.4517,
+      0.5593,
+      0.6116,
+      0.6237,
+      0.6707,
+      0.6724,
+      0.6948,
+      0.7875,
+      0.8058,
+      0.8259,
+      0.8697,
+      0.8714,
+      0.8811,
+      0.8874,
+      0.8983,
+      0.9017,
+      0.9316,
+      0.9334,
+      0.9529,
+      0.9655,
+      0.9897,
+      0.9919,
+      1.0,
+      1.0
+    ],
+    "auc": null
+  },
+  "confusion": [
+    [
+      0,
+      0,
+      0,
+      0,
+      7
+    ],
+    [
+      0,
+      0,
+      20,
+      0,
+      11
+    ],
+    [
+      0,
+      0,
+      93,
+      0,
+      17
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      65,
+      0,
+      80
+    ]
+  ],
+  "classes": [
+    "drizzle",
+    "fog",
+    "rain",
+    "snow",
+    "sun"
+  ]
+}
