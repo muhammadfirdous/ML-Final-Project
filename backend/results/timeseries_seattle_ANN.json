@@ -3,13 +3,13 @@
   "datasetId": "seattle",
   "model": "ANN",
   "metrics": {
-    "accuracy": 61,
-    "precision": 0.3063,
-    "recall": 0.3504,
-    "f1": 0.3268,
+    "accuracy": 66,
+    "precision": 0.3326,
+    "recall": 0.3734,
+    "f1": 0.3498,
     "auc": null,
     "params": "24,069",
-    "trainingTime": "0m 03s"
+    "trainingTime": "0m 05s"
   },
   "curve": [
     {
@@ -102,6 +102,223 @@
       "valLoss": 0.9763,
       "trainAcc": 0.5923,
       "valAcc": 0.6348
+    },
+    {
+      "epoch": 14,
+      "trainLoss": 0.9753,
+      "valLoss": 0.9738,
+      "trainAcc": 0.594,
+      "valAcc": 0.6382
+    },
+    {
+      "epoch": 15,
+      "trainLoss": 0.9663,
+      "valLoss": 0.9796,
+      "trainAcc": 0.5958,
+      "valAcc": 0.6212
+    },
+    {
+      "epoch": 16,
+      "trainLoss": 0.9535,
+      "valLoss": 0.979,
+      "trainAcc": 0.6081,
+      "valAcc": 0.628
+    },
+    {
+      "epoch": 17,
+      "trainLoss": 0.9575,
+      "valLoss": 0.9654,
+      "trainAcc": 0.6107,
+      "valAcc": 0.6416
+    },
+    {
+      "epoch": 18,
+      "trainLoss": 0.9493,
+      "valLoss": 0.9629,
+      "trainAcc": 0.6274,
+      "valAcc": 0.6451
+    },
+    {
+      "epoch": 19,
+      "trainLoss": 0.9419,
+      "valLoss": 0.9753,
+      "trainAcc": 0.6186,
+      "valAcc": 0.6212
+    },
+    {
+      "epoch": 20,
+      "trainLoss": 0.9558,
+      "valLoss": 0.9706,
+      "trainAcc": 0.6178,
+      "valAcc": 0.6246
+    },
+    {
+      "epoch": 21,
+      "trainLoss": 0.9344,
+      "valLoss": 0.9701,
+      "trainAcc": 0.6248,
+      "valAcc": 0.6451
+    },
+    {
+      "epoch": 22,
+      "trainLoss": 0.9282,
+      "valLoss": 0.9693,
+      "trainAcc": 0.6169,
+      "valAcc": 0.6348
+    },
+    {
+      "epoch": 23,
+      "trainLoss": 0.9294,
+      "valLoss": 0.9675,
+      "trainAcc": 0.6239,
+      "valAcc": 0.628
+    },
+    {
+      "epoch": 24,
+      "trainLoss": 0.9246,
+      "valLoss": 0.9668,
+      "trainAcc": 0.6406,
+      "valAcc": 0.6382
+    },
+    {
+      "epoch": 25,
+      "trainLoss": 0.9215,
+      "valLoss": 0.9733,
+      "trainAcc": 0.6213,
+      "valAcc": 0.6382
+    },
+    {
+      "epoch": 26,
+      "trainLoss": 0.9203,
+      "valLoss": 0.9696,
+      "trainAcc": 0.6274,
+      "valAcc": 0.6485
+    },
+    {
+      "epoch": 27,
+      "trainLoss": 0.9216,
+      "valLoss": 0.9708,
+      "trainAcc": 0.6362,
+      "valAcc": 0.6485
+    },
+    {
+      "epoch": 28,
+      "trainLoss": 0.9142,
+      "valLoss": 0.9772,
+      "trainAcc": 0.6362,
+      "valAcc": 0.6212
+    },
+    {
+      "epoch": 29,
+      "trainLoss": 0.9191,
+      "valLoss": 0.9601,
+      "trainAcc": 0.6371,
+      "valAcc": 0.6621
+    },
+    {
+      "epoch": 30,
+      "trainLoss": 0.9093,
+      "valLoss": 0.9679,
+      "trainAcc": 0.6125,
+      "valAcc": 0.6485
+    },
+    {
+      "epoch": 31,
+      "trainLoss": 0.8986,
+      "valLoss": 0.9652,
+      "trainAcc": 0.6503,
+      "valAcc": 0.6519
+    },
+    {
+      "epoch": 32,
+      "trainLoss": 0.914,
+      "valLoss": 0.9687,
+      "trainAcc": 0.6221,
+      "valAcc": 0.6485
+    },
+    {
+      "epoch": 33,
+      "trainLoss": 0.9009,
+      "valLoss": 0.9615,
+      "trainAcc": 0.6327,
+      "valAcc": 0.6553
+    },
+    {
+      "epoch": 34,
+      "trainLoss": 0.9062,
+      "valLoss": 0.9639,
+      "trainAcc": 0.638,
+      "valAcc": 0.6519
+    },
+    {
+      "epoch": 35,
+      "trainLoss": 0.9017,
+      "valLoss": 0.964,
+      "trainAcc": 0.6406,
+      "valAcc": 0.6485
+    },
+    {
+      "epoch": 36,
+      "trainLoss": 0.9018,
+      "valLoss": 0.9644,
+      "trainAcc": 0.638,
+      "valAcc": 0.6485
+    },
+    {
+      "epoch": 37,
+      "trainLoss": 0.8973,
+      "valLoss": 0.9631,
+      "trainAcc": 0.6336,
+      "valAcc": 0.6553
+    },
+    {
+      "epoch": 38,
+      "trainLoss": 0.8897,
+      "valLoss": 0.9641,
+      "trainAcc": 0.6573,
+      "valAcc": 0.6519
+    },
+    {
+      "epoch": 39,
+      "trainLoss": 0.8935,
+      "valLoss": 0.9625,
+      "trainAcc": 0.6424,
+      "valAcc": 0.6587
+    },
+    {
+      "epoch": 40,
+      "trainLoss": 0.9069,
+      "valLoss": 0.961,
+      "trainAcc": 0.6406,
+      "valAcc": 0.6587
+    },
+    {
+      "epoch": 41,
+      "trainLoss": 0.8785,
+      "valLoss": 0.9622,
+      "trainAcc": 0.6415,
+      "valAcc": 0.6587
+    },
+    {
+      "epoch": 42,
+      "trainLoss": 0.8855,
+      "valLoss": 0.9634,
+      "trainAcc": 0.6424,
+      "valAcc": 0.6587
+    },
+    {
+      "epoch": 43,
+      "trainLoss": 0.8979,
+      "valLoss": 0.9623,
+      "trainAcc": 0.6432,
+      "valAcc": 0.6587
+    },
+    {
+      "epoch": 44,
+      "trainLoss": 0.9021,
+      "valLoss": 0.9626,
+      "trainAcc": 0.6344,
+      "valAcc": 0.6587
     }
   ],
   "classify": true,
@@ -140,36 +357,36 @@
       1.0
     ],
     "tpr": [
-      0.0068,
-      0.0794,
-      0.1618,
-      0.2184,
-      0.2729,
-      0.3251,
-      0.3548,
-      0.3921,
-      0.423,
-      0.4488,
-      0.4591,
-      0.4981,
-      0.5067,
-      0.6061,
-      0.6591,
-      0.6849,
-      0.6923,
-      0.7482,
-      0.7954,
-      0.8374,
-      0.8546,
-      0.8696,
-      0.8885,
-      0.8965,
-      0.9039,
-      0.912,
-      0.916,
-      0.9597,
-      0.9597,
-      0.9857,
+      0.0267,
+      0.0983,
+      0.163,
+      0.2152,
+      0.2845,
+      0.3916,
+      0.4041,
+      0.426,
+      0.4656,
+      0.5186,
+      0.5357,
+      0.5794,
+      0.6569,
+      0.7364,
+      0.7507,
+      0.7587,
+      0.7787,
+      0.8248,
+      0.8305,
+      0.8328,
+      0.8413,
+      0.8453,
+      0.862,
+      0.8803,
+      0.8958,
+      0.8976,
+      0.9431,
+      0.9511,
+      0.9793,
+      0.9977,
       1.0
     ],
     "auc": null
@@ -185,16 +402,16 @@
     [
       0,
       0,
-      10,
+      12,
       0,
-      21
+      19
     ],
     [
       0,
       0,
-      73,
+      71,
       0,
-      37
+      39
     ],
     [
       0,
@@ -206,9 +423,9 @@
     [
       0,
       0,
-      38,
+      22,
       0,
-      107
+      123
     ]
   ],
   "classes": [

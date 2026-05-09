@@ -3,154 +3,280 @@
   "datasetId": "seattle",
   "model": "GRU",
   "metrics": {
-    "accuracy": 59,
-    "precision": 0.3045,
-    "recall": 0.3493,
-    "f1": 0.3153,
+    "accuracy": 60,
+    "precision": 0.3089,
+    "recall": 0.3538,
+    "f1": 0.3188,
     "auc": null,
-    "params": "50,645",
-    "trainingTime": "0m 24s"
+    "params": "52,133",
+    "trainingTime": "0m 17s"
   },
   "curve": [
     {
       "epoch": 1,
-      "trainLoss": 1.2247,
-      "valLoss": 1.0676,
-      "trainAcc": 0.442,
+      "trainLoss": 1.2651,
+      "valLoss": 1.1485,
+      "trainAcc": 0.4684,
       "valAcc": 0.6314
     },
     {
       "epoch": 2,
-      "trainLoss": 1.0934,
-      "valLoss": 1.0494,
-      "trainAcc": 0.4895,
-      "valAcc": 0.628
-    },
-    {
-      "epoch": 3,
-      "trainLoss": 1.0974,
-      "valLoss": 1.0323,
-      "trainAcc": 0.5044,
+      "trainLoss": 1.2,
+      "valLoss": 1.1386,
+      "trainAcc": 0.4965,
       "valAcc": 0.6246
     },
     {
+      "epoch": 3,
+      "trainLoss": 1.1981,
+      "valLoss": 1.1294,
+      "trainAcc": 0.5149,
+      "valAcc": 0.628
+    },
+    {
       "epoch": 4,
-      "trainLoss": 1.0801,
-      "valLoss": 1.0349,
-      "trainAcc": 0.5369,
-      "valAcc": 0.5836
+      "trainLoss": 1.1853,
+      "valLoss": 1.1234,
+      "trainAcc": 0.5149,
+      "valAcc": 0.6246
     },
     {
       "epoch": 5,
-      "trainLoss": 1.0778,
-      "valLoss": 1.0288,
-      "trainAcc": 0.5,
-      "valAcc": 0.6143
+      "trainLoss": 1.1805,
+      "valLoss": 1.1254,
+      "trainAcc": 0.4947,
+      "valAcc": 0.5666
     },
     {
       "epoch": 6,
-      "trainLoss": 1.0711,
-      "valLoss": 1.0194,
-      "trainAcc": 0.5334,
-      "valAcc": 0.6348
+      "trainLoss": 1.1719,
+      "valLoss": 1.1093,
+      "trainAcc": 0.5299,
+      "valAcc": 0.5666
     },
     {
       "epoch": 7,
-      "trainLoss": 1.0599,
-      "valLoss": 1.0055,
-      "trainAcc": 0.5369,
-      "valAcc": 0.6314
+      "trainLoss": 1.1757,
+      "valLoss": 1.1343,
+      "trainAcc": 0.5281,
+      "valAcc": 0.5904
     },
     {
       "epoch": 8,
-      "trainLoss": 1.0593,
-      "valLoss": 1.0046,
-      "trainAcc": 0.5308,
-      "valAcc": 0.6485
+      "trainLoss": 1.164,
+      "valLoss": 1.1554,
+      "trainAcc": 0.5325,
+      "valAcc": 0.4778
     },
     {
       "epoch": 9,
-      "trainLoss": 1.0557,
-      "valLoss": 1.0134,
-      "trainAcc": 0.5193,
-      "valAcc": 0.6416
+      "trainLoss": 1.1594,
+      "valLoss": 1.1334,
+      "trainAcc": 0.5316,
+      "valAcc": 0.5392
     },
     {
       "epoch": 10,
-      "trainLoss": 1.0496,
-      "valLoss": 0.9978,
-      "trainAcc": 0.5378,
-      "valAcc": 0.6382
+      "trainLoss": 1.1603,
+      "valLoss": 1.1232,
+      "trainAcc": 0.5387,
+      "valAcc": 0.5768
     },
     {
       "epoch": 11,
-      "trainLoss": 1.0451,
-      "valLoss": 1.0087,
-      "trainAcc": 0.5369,
-      "valAcc": 0.6109
+      "trainLoss": 1.1579,
+      "valLoss": 1.1163,
+      "trainAcc": 0.5264,
+      "valAcc": 0.6382
     },
     {
       "epoch": 12,
-      "trainLoss": 1.0447,
-      "valLoss": 0.9988,
-      "trainAcc": 0.5325,
-      "valAcc": 0.6485
+      "trainLoss": 1.1396,
+      "valLoss": 1.1091,
+      "trainAcc": 0.5518,
+      "valAcc": 0.6416
     },
     {
       "epoch": 13,
-      "trainLoss": 1.0438,
-      "valLoss": 0.997,
-      "trainAcc": 0.5677,
-      "valAcc": 0.6451
+      "trainLoss": 1.136,
+      "valLoss": 1.1055,
+      "trainAcc": 0.5668,
+      "valAcc": 0.5973
     },
     {
       "epoch": 14,
-      "trainLoss": 1.0463,
-      "valLoss": 1.0085,
-      "trainAcc": 0.5395,
+      "trainLoss": 1.1302,
+      "valLoss": 1.1088,
+      "trainAcc": 0.536,
       "valAcc": 0.6075
     },
     {
       "epoch": 15,
-      "trainLoss": 1.0127,
-      "valLoss": 0.9951,
-      "trainAcc": 0.5668,
-      "valAcc": 0.5904
+      "trainLoss": 1.1267,
+      "valLoss": 1.112,
+      "trainAcc": 0.5756,
+      "valAcc": 0.57
     },
     {
       "epoch": 16,
-      "trainLoss": 1.0338,
-      "valLoss": 1.0102,
-      "trainAcc": 0.5589,
-      "valAcc": 0.6041
+      "trainLoss": 1.1186,
+      "valLoss": 1.125,
+      "trainAcc": 0.5536,
+      "valAcc": 0.5495
     },
     {
       "epoch": 17,
-      "trainLoss": 1.0298,
-      "valLoss": 1.0116,
-      "trainAcc": 0.5659,
-      "valAcc": 0.6007
+      "trainLoss": 1.1162,
+      "valLoss": 1.1404,
+      "trainAcc": 0.5562,
+      "valAcc": 0.4915
     },
     {
       "epoch": 18,
-      "trainLoss": 1.0232,
-      "valLoss": 1.0046,
-      "trainAcc": 0.565,
-      "valAcc": 0.6041
+      "trainLoss": 1.1298,
+      "valLoss": 1.1319,
+      "trainAcc": 0.5562,
+      "valAcc": 0.5597
     },
     {
       "epoch": 19,
-      "trainLoss": 1.0136,
-      "valLoss": 1.0101,
-      "trainAcc": 0.5677,
-      "valAcc": 0.5939
+      "trainLoss": 1.1152,
+      "valLoss": 1.1126,
+      "trainAcc": 0.5808,
+      "valAcc": 0.5904
     },
     {
       "epoch": 20,
-      "trainLoss": 1.0186,
-      "valLoss": 1.0239,
+      "trainLoss": 1.1137,
+      "valLoss": 1.1102,
+      "trainAcc": 0.5615,
+      "valAcc": 0.5666
+    },
+    {
+      "epoch": 21,
+      "trainLoss": 1.1115,
+      "valLoss": 1.1272,
+      "trainAcc": 0.5641,
+      "valAcc": 0.5597
+    },
+    {
+      "epoch": 22,
+      "trainLoss": 1.0939,
+      "valLoss": 1.1033,
+      "trainAcc": 0.58,
+      "valAcc": 0.5939
+    },
+    {
+      "epoch": 23,
+      "trainLoss": 1.102,
+      "valLoss": 1.0985,
+      "trainAcc": 0.5571,
+      "valAcc": 0.5973
+    },
+    {
+      "epoch": 24,
+      "trainLoss": 1.1413,
+      "valLoss": 1.1208,
+      "trainAcc": 0.5747,
+      "valAcc": 0.5939
+    },
+    {
+      "epoch": 25,
+      "trainLoss": 1.1024,
+      "valLoss": 1.1051,
+      "trainAcc": 0.5527,
+      "valAcc": 0.5904
+    },
+    {
+      "epoch": 26,
+      "trainLoss": 1.1142,
+      "valLoss": 1.1226,
       "trainAcc": 0.5606,
-      "valAcc": 0.5631
+      "valAcc": 0.5666
+    },
+    {
+      "epoch": 27,
+      "trainLoss": 1.096,
+      "valLoss": 1.1087,
+      "trainAcc": 0.5747,
+      "valAcc": 0.5802
+    },
+    {
+      "epoch": 28,
+      "trainLoss": 1.1299,
+      "valLoss": 1.1252,
+      "trainAcc": 0.5624,
+      "valAcc": 0.5495
+    },
+    {
+      "epoch": 29,
+      "trainLoss": 1.1035,
+      "valLoss": 1.1032,
+      "trainAcc": 0.5712,
+      "valAcc": 0.5973
+    },
+    {
+      "epoch": 30,
+      "trainLoss": 1.1059,
+      "valLoss": 1.1151,
+      "trainAcc": 0.5668,
+      "valAcc": 0.57
+    },
+    {
+      "epoch": 31,
+      "trainLoss": 1.101,
+      "valLoss": 1.1143,
+      "trainAcc": 0.5712,
+      "valAcc": 0.5802
+    },
+    {
+      "epoch": 32,
+      "trainLoss": 1.0943,
+      "valLoss": 1.1313,
+      "trainAcc": 0.5721,
+      "valAcc": 0.5495
+    },
+    {
+      "epoch": 33,
+      "trainLoss": 1.0876,
+      "valLoss": 1.1167,
+      "trainAcc": 0.5668,
+      "valAcc": 0.57
+    },
+    {
+      "epoch": 34,
+      "trainLoss": 1.0912,
+      "valLoss": 1.1128,
+      "trainAcc": 0.5712,
+      "valAcc": 0.57
+    },
+    {
+      "epoch": 35,
+      "trainLoss": 1.1078,
+      "valLoss": 1.1272,
+      "trainAcc": 0.5835,
+      "valAcc": 0.5461
+    },
+    {
+      "epoch": 36,
+      "trainLoss": 1.111,
+      "valLoss": 1.1246,
+      "trainAcc": 0.5668,
+      "valAcc": 0.5495
+    },
+    {
+      "epoch": 37,
+      "trainLoss": 1.0895,
+      "valLoss": 1.1302,
+      "trainAcc": 0.5817,
+      "valAcc": 0.5495
+    },
+    {
+      "epoch": 38,
+      "trainLoss": 1.0894,
+      "valLoss": 1.1186,
+      "trainAcc": 0.5729,
+      "valAcc": 0.57
     }
   ],
   "classify": true,
@@ -189,34 +315,34 @@
       1.0
     ],
     "tpr": [
-      0.0486,
-      0.1313,
-      0.1732,
-      0.2151,
-      0.2844,
-      0.3698,
-      0.4174,
-      0.4517,
-      0.5593,
-      0.6116,
-      0.6237,
-      0.6707,
-      0.6724,
-      0.6948,
-      0.7875,
-      0.8058,
-      0.8259,
-      0.8697,
-      0.8714,
-      0.8811,
+      0.0074,
+      0.0857,
+      0.1992,
+      0.245,
+      0.2984,
+      0.3633,
+      0.3981,
+      0.4421,
+      0.4933,
+      0.5502,
+      0.6565,
+      0.6858,
+      0.7421,
+      0.7898,
+      0.8014,
+      0.8387,
+      0.8495,
+      0.857,
+      0.8668,
+      0.8685,
       0.8874,
-      0.8983,
-      0.9017,
-      0.9316,
-      0.9334,
-      0.9529,
+      0.9023,
+      0.9058,
+      0.9178,
+      0.9426,
+      0.9552,
       0.9655,
-      0.9897,
+      0.9862,
       0.9919,
       1.0,
       1.0
@@ -241,9 +367,9 @@
     [
       0,
       0,
-      93,
+      95,
       0,
-      17
+      15
     ],
     [
       0,

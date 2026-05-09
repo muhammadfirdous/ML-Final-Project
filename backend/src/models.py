@@ -28,16 +28,20 @@ def _resolve_units(spec, fallback: int) -> list[int]:
 def _input_layer(input_shape, hp: dict[str, Any]):
     """Add an Embedding layer for text tasks; otherwise plain Input.
 
-    ``mask_zero`` is intentionally False — it serializes a NotEqual op into the
-    .h5 that Keras 3 / TF 2.20 won't reload without custom_objects gymnastics.
-    Padding zeros still get an embedding, but the RNN's input dropout absorbs
-    most of the impact and the Twitter accuracy delta is well under 1%.
+    ``mask_zero`` defaults to False — historically it serialized a NotEqual op
+    into the .h5 that Keras 3 / TF 2.20 won't reload without custom_objects
+    gymnastics. The original baseline tolerated that since the leaked val set
+    masked the deficit. With a clean resplit, LSTM/GRU collapse to the class
+    prior because pad-zero embeddings dilute the gradient. Set
+    ``hp.embedding_mask_zero=True`` to enable masking; we don't write .h5 in
+    that mode (only the JSON metric, which is what the dashboard reads).
     """
     if "vocab_size" in hp and len(input_shape) == 1:
         inp = layers.Input(shape=input_shape, dtype="int32")
         x = layers.Embedding(
             input_dim=hp["vocab_size"],
             output_dim=hp["embedding_dim"],
+            mask_zero=bool(hp.get("embedding_mask_zero", False)),
         )(inp)
         return inp, x
     inp = layers.Input(shape=input_shape)

@@ -3,74 +3,137 @@
   "datasetId": "corgis",
   "model": "ANN",
   "metrics": {
-    "accuracy": 48,
-    "mae": 9.2824,
-    "rmse": 12.6475,
-    "mape": 25.96,
-    "params": "31,489",
+    "accuracy": 56,
+    "mae": 8.566,
+    "rmse": 11.5808,
+    "mape": 24.12,
+    "params": "39,169",
     "trainingTime": "0m 05s"
   },
   "curve": [
     {
       "epoch": 1,
-      "trainLoss": 0.0646,
-      "valLoss": 0.0203,
+      "trainLoss": 0.0611,
+      "valLoss": 0.018,
       "trainAcc": 0.0,
       "valAcc": 0.0
     },
     {
       "epoch": 2,
       "trainLoss": 0.0222,
-      "valLoss": 0.0143,
+      "valLoss": 0.0175,
       "trainAcc": 0.0,
       "valAcc": 0.0
     },
     {
       "epoch": 3,
-      "trainLoss": 0.0177,
-      "valLoss": 0.014,
+      "trainLoss": 0.018,
+      "valLoss": 0.0156,
       "trainAcc": 0.0,
       "valAcc": 0.0
     },
     {
       "epoch": 4,
-      "trainLoss": 0.0146,
-      "valLoss": 0.0125,
+      "trainLoss": 0.0147,
+      "valLoss": 0.0129,
       "trainAcc": 0.0,
       "valAcc": 0.0
     },
     {
       "epoch": 5,
-      "trainLoss": 0.0124,
-      "valLoss": 0.0147,
+      "trainLoss": 0.0125,
+      "valLoss": 0.0128,
       "trainAcc": 0.0,
       "valAcc": 0.0
     },
     {
       "epoch": 6,
-      "trainLoss": 0.0118,
-      "valLoss": 0.0136,
+      "trainLoss": 0.0114,
+      "valLoss": 0.0128,
       "trainAcc": 0.0,
       "valAcc": 0.0
     },
     {
       "epoch": 7,
-      "trainLoss": 0.0101,
-      "valLoss": 0.0152,
+      "trainLoss": 0.0095,
+      "valLoss": 0.0111,
       "trainAcc": 0.0,
       "valAcc": 0.0
     },
     {
       "epoch": 8,
-      "trainLoss": 0.0098,
-      "valLoss": 0.0204,
+      "trainLoss": 0.0087,
+      "valLoss": 0.0105,
       "trainAcc": 0.0,
       "valAcc": 0.0
     },
     {
       "epoch": 9,
-      "trainLoss": 0.0085,
-      "valLoss": 0.0212,
+      "trainLoss": 0.0072,
+      "valLoss": 0.0112,
+      "trainAcc": 0.0,
+      "valAcc": 0.0
+    },
+    {
+      "epoch": 10,
+      "trainLoss": 0.0067,
+      "valLoss": 0.0127,
+      "trainAcc": 0.0,
+      "valAcc": 0.0
+    },
+    {
+      "epoch": 11,
+      "trainLoss": 0.0059,
+      "valLoss": 0.013,
+      "trainAcc": 0.0,
+      "valAcc": 0.0
+    },
+    {
+      "epoch": 12,
+      "trainLoss": 0.0056,
+      "valLoss": 0.014,
+      "trainAcc": 0.0,
+      "valAcc": 0.0
+    },
+    {
+      "epoch": 13,
+      "trainLoss": 0.0051,
+      "valLoss": 0.0196,
+      "trainAcc": 0.0,
+      "valAcc": 0.0
+    },
+    {
+      "epoch": 14,
+      "trainLoss": 0.0045,
+      "valLoss": 0.0161,
+      "trainAcc": 0.0,
+      "valAcc": 0.0
+    },
+    {
+      "epoch": 15,
+      "trainLoss": 0.0042,
+      "valLoss": 0.0135,
+      "trainAcc": 0.0,
+      "valAcc": 0.0
+    },
+    {
+      "epoch": 16,
+      "trainLoss": 0.004,
+      "valLoss": 0.0188,
+      "trainAcc": 0.0,
+      "valAcc": 0.0
+    },
+    {
+      "epoch": 17,
+      "trainLoss": 0.0041,
+      "valLoss": 0.0165,
+      "trainAcc": 0.0,
+      "valAcc": 0.0
+    },
+    {
+      "epoch": 18,
+      "trainLoss": 0.0036,
+      "valLoss": 0.0198,
       "trainAcc": 0.0,
       "valAcc": 0.0
     }
@@ -80,302 +143,302 @@
     {
       "day": 1,
       "actual": 60.0,
-      "predicted": 46.5
+      "predicted": 54.29
     },
     {
       "day": 2,
       "actual": 60.0,
-      "predicted": 47.29
+      "predicted": 52.11
     },
     {
       "day": 3,
       "actual": 50.0,
-      "predicted": 46.28
+      "predicted": 48.58
     },
     {
       "day": 4,
       "actual": 46.0,
-      "predicted": 48.88
+      "predicted": 45.96
     },
     {
       "day": 5,
       "actual": 47.0,
-      "predicted": 42.48
+      "predicted": 47.02
     },
     {
       "day": 6,
       "actual": 40.0,
-      "predicted": 46.63
+      "predicted": 44.32
     },
     {
       "day": 7,
       "actual": 43.0,
-      "predicted": 48.54
+      "predicted": 40.42
     },
     {
       "day": 8,
       "actual": 33.0,
-      "predicted": 51.17
+      "predicted": 43.23
     },
     {
       "day": 9,
       "actual": 30.0,
-      "predicted": 45.89
+      "predicted": 45.68
     },
     {
       "day": 10,
       "actual": 32.0,
-      "predicted": 43.38
+      "predicted": 43.53
     },
     {
       "day": 11,
       "actual": 36.0,
-      "predicted": 46.09
+      "predicted": 41.4
     },
     {
       "day": 12,
       "actual": 70.0,
-      "predicted": 61.31
+      "predicted": 62.35
     },
     {
       "day": 13,
       "actual": 72.0,
-      "predicted": 62.98
+      "predicted": 57.82
     },
     {
       "day": 14,
       "actual": 68.0,
-      "predicted": 55.09
+      "predicted": 56.53
     },
     {
       "day": 15,
       "actual": 59.0,
-      "predicted": 61.94
+      "predicted": 56.11
     },
     {
       "day": 16,
       "actual": 59.0,
-      "predicted": 55.42
+      "predicted": 55.93
     },
     {
       "day": 17,
       "actual": 58.0,
-      "predicted": 58.15
+      "predicted": 53.44
     },
     {
       "day": 18,
       "actual": 48.0,
-      "predicted": 57.97
+      "predicted": 54.08
     },
     {
       "day": 19,
       "actual": 42.0,
-      "predicted": 52.78
+      "predicted": 52.92
     },
     {
       "day": 20,
       "actual": 41.0,
-      "predicted": 47.96
+      "predicted": 50.64
     },
     {
       "day": 21,
       "actual": 48.0,
-      "predicted": 47.36
+      "predicted": 50.02
     },
     {
       "day": 22,
       "actual": 54.0,
-      "predicted": 49.77
+      "predicted": 52.29
     },
     {
       "day": 23,
       "actual": 62.0,
-      "predicted": 55.07
+      "predicted": 56.62
     },
     {
       "day": 24,
       "actual": 63.0,
-      "predicted": 52.63
+      "predicted": 53.99
     },
     {
       "day": 25,
       "actual": 56.0,
-      "predicted": 50.73
+      "predicted": 51.94
     },
     {
       "day": 26,
       "actual": 51.0,
-      "predicted": 51.76
+      "predicted": 53.09
     },
     {
       "day": 27,
       "actual": 49.0,
-      "predicted": 51.22
+      "predicted": 51.59
     },
     {
       "day": 28,
       "actual": 44.0,
-      "predicted": 48.99
+      "predicted": 49.03
     },
     {
       "day": 29,
       "actual": 38.0,
-      "predicted": 50.86
+      "predicted": 49.05
     },
     {
       "day": 30,
       "actual": 38.0,
-      "predicted": 47.16
+      "predicted": 45.18
     },
     {
       "day": 31,
       "actual": 44.0,
-      "predicted": 48.65
+      "predicted": 45.37
     },
     {
       "day": 32,
       "actual": 39.0,
-      "predicted": 48.43
+      "predicted": 44.25
     },
     {
       "day": 33,
       "actual": 36.0,
-      "predicted": 45.58
+      "predicted": 48.65
     },
     {
       "day": 34,
       "actual": 46.0,
-      "predicted": 52.38
+      "predicted": 51.7
     },
     {
       "day": 35,
       "actual": 49.0,
-      "predicted": 47.47
+      "predicted": 50.72
     },
     {
       "day": 36,
       "actual": 52.0,
-      "predicted": 47.4
+      "predicted": 48.93
     },
     {
       "day": 37,
       "actual": 46.0,
-      "predicted": 44.38
+      "predicted": 48.22
     },
     {
       "day": 38,
       "actual": 35.0,
-      "predicted": 43.11
+      "predicted": 45.87
     },
     {
       "day": 39,
       "actual": 32.0,
-      "predicted": 42.02
+      "predicted": 44.37
     },
     {
       "day": 40,
       "actual": 29.0,
-      "predicted": 43.65
+      "predicted": 42.43
     },
     {
       "day": 41,
       "actual": 8.0,
-      "predicted": 43.56
+      "predicted": 42.45
     },
     {
       "day": 42,
       "actual": -6.0,
-      "predicted": 38.77
+      "predicted": 38.32
     },
     {
       "day": 43,
       "actual": 22.0,
-      "predicted": 38.17
+      "predicted": 35.87
     },
     {
       "day": 44,
       "actual": 21.0,
-      "predicted": 40.61
+      "predicted": 34.98
     },
     {
       "day": 45,
       "actual": 71.0,
-      "predicted": 60.17
+      "predicted": 63.0
     },
     {
       "day": 46,
       "actual": 73.0,
-      "predicted": 63.88
+      "predicted": 58.3
     },
     {
       "day": 47,
       "actual": 72.0,
-      "predicted": 59.1
+      "predicted": 56.26
     },
     {
       "day": 48,
       "actual": 63.0,
-      "predicted": 64.92
+      "predicted": 57.54
     },
     {
       "day": 49,
       "actual": 60.0,
-      "predicted": 55.61
+      "predicted": 56.21
     },
     {
       "day": 50,
       "actual": 57.0,
-      "predicted": 62.64
+      "predicted": 55.97
     },
     {
       "day": 51,
       "actual": 50.0,
-      "predicted": 60.11
+      "predicted": 55.25
     },
     {
       "day": 52,
       "actual": 46.0,
-      "predicted": 54.45
+      "predicted": 54.04
     },
     {
       "day": 53,
       "actual": 47.0,
-      "predicted": 51.6
+      "predicted": 51.22
     },
     {
       "day": 54,
       "actual": 53.0,
-      "predicted": 49.52
+      "predicted": 55.05
     },
     {
       "day": 55,
       "actual": 60.0,
-      "predicted": 51.46
+      "predicted": 54.64
     },
     {
       "day": 56,
       "actual": 65.0,
-      "predicted": 50.77
+      "predicted": 57.81
     },
     {
       "day": 57,
       "actual": 52.0,
-      "predicted": 58.57
+      "predicted": 54.93
     },
     {
       "day": 58,
       "actual": 54.0,
-      "predicted": 50.67
+      "predicted": 52.65
     },
     {
       "day": 59,
       "actual": 48.0,
-      "predicted": 55.35
+      "predicted": 49.77
     },
     {
       "day": 60,
       "actual": 48.0,
-      "predicted": 47.31
+      "predicted": 52.11
     }
   ]
 }

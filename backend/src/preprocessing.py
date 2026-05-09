@@ -105,9 +105,49 @@ def prep_tess(
     sigma = X_train_raw.std(axis=(0, 1), keepdims=True) + 1e-6
     X = ((X - mu) / sigma).astype(np.float32)
 
+    X_tr = X[train_mask]
+    y_tr = y[train_mask]
+
+    # Optional SpecAugment-style augmentation: time-mask + frequency-mask, plus
+    # k extra augmented copies of the training set. ``hp.specaug_copies`` controls
+    # how many augmented passes; default 0 keeps baseline behavior.
+    n_aug = int(hp.get("specaug_copies", 0))
+    if n_aug > 0:
+        rng = np.random.RandomState(42)
+        time_mask_max = int(hp.get("specaug_time_mask", max_frames // 8))
+        freq_mask_max = int(hp.get("specaug_freq_mask", n_mfcc // 6))
+        n_time_masks = int(hp.get("specaug_n_time", 2))
+        n_freq_masks = int(hp.get("specaug_n_freq", 2))
+        aug_X = [X_tr]
+        aug_y = [y_tr]
+        for _ in range(n_aug):
+            X_copy = X_tr.copy()
+            for i in range(X_copy.shape[0]):
+                # Frequency masks
+                for _m in range(n_freq_masks):
+                    f = int(rng.randint(0, freq_mask_max + 1))
+                    if f > 0:
+                        f0 = int(rng.randint(0, max(1, n_mfcc - f)))
+                        X_copy[i, :, f0 : f0 + f] = 0.0
+                # Time masks
+                for _m in range(n_time_masks):
+                    t = int(rng.randint(0, time_mask_max + 1))
+                    if t > 0:
+                        t0 = int(rng.randint(0, max(1, max_frames - t)))
+                        X_copy[i, t0 : t0 + t, :] = 0.0
+            aug_X.append(X_copy)
+            aug_y.append(y_tr)
+        X_tr = np.concatenate(aug_X, axis=0).astype(np.float32)
+        y_tr = np.concatenate(aug_y, axis=0)
+        # Shuffle so each batch sees a mix of original + augmented.
+        idx = np.arange(len(X_tr))
+        np.random.RandomState(42).shuffle(idx)
+        X_tr = X_tr[idx]
+        y_tr = y_tr[idx]
+
     return {
-        "X_train": X[train_mask],
-        "y_train": y[train_mask],
+        "X_train": X_tr,
+        "y_train": y_tr,
         "X_val":   X[val_mask],
         "y_val":   y[val_mask],
         "input_shape": (max_frames, n_mfcc),
@@ -152,20 +192,49 @@ def _clean_tweet(s: str, stopwords: set[str]) -> str:
 
 
 def prep_twitter(train_df: pd.DataFrame, val_df: pd.DataFrame, hp: dict[str, Any]) -> dict[str, Any]:
-    """lowercase → strip URLs/mentions/punct → stopwords → Tokenizer → pad."""
+    """lowercase → strip URLs/mentions/punct → stopwords → Tokenizer → pad.
+
+    Optional hp flags (default off — preserve baseline behavior):
+    - ``dedupe_train`` (bool): drop duplicate (text, sentiment) rows from training.
+    - ``drop_val_leak`` (bool): remove val rows whose cleaned text appears in train.
+    - ``resplit`` (bool): combine training+validation, dedupe, then take a fresh
+      stratified 90/10 split. Overrides ``drop_val_leak``.
+    """
     from tensorflow.keras.preprocessing.sequence import pad_sequences
     from tensorflow.keras.preprocessing.text import Tokenizer
+    from sklearn.model_selection import train_test_split
 
     stops = _load_stopwords()
-    train_texts = [_clean_tweet(t, stops) for t in train_df["text"].astype(str)]
-    val_texts = [_clean_tweet(t, stops) for t in val_df["text"].astype(str)]
 
-    # LabelEncoder sorts alphabetically; align ``classes`` to its real order
-    # so downstream argmax → class-name lookup is correct.
+    if hp.get("resplit"):
+        full = pd.concat([train_df, val_df], ignore_index=True).copy()
+        full["clean"] = [_clean_tweet(t, stops) for t in full["text"].astype(str)]
+        full = full[full["clean"].str.len() > 0]
+        full = full.drop_duplicates(subset=["clean", "sentiment"]).reset_index(drop=True)
+        tr, va = train_test_split(
+            full, test_size=0.10, stratify=full["sentiment"], random_state=42
+        )
+        train_texts = tr["clean"].tolist()
+        val_texts = va["clean"].tolist()
+        train_sent = tr["sentiment"].astype(str)
+        val_sent = va["sentiment"].astype(str)
+    else:
+        if hp.get("dedupe_train"):
+            train_df = train_df.drop_duplicates(subset=["text", "sentiment"]).reset_index(drop=True)
+        train_texts = [_clean_tweet(t, stops) for t in train_df["text"].astype(str)]
+        val_texts = [_clean_tweet(t, stops) for t in val_df["text"].astype(str)]
+        if hp.get("drop_val_leak"):
+            train_set = set(train_texts)
+            keep = [i for i, t in enumerate(val_texts) if t not in train_set]
+            val_texts = [val_texts[i] for i in keep]
+            val_df = val_df.iloc[keep].reset_index(drop=True)
+        train_sent = train_df["sentiment"].astype(str)
+        val_sent = val_df["sentiment"].astype(str)
+
     le = LabelEncoder().fit(["Positive", "Negative", "Neutral", "Irrelevant"])
     classes = list(le.classes_)  # → ['Irrelevant', 'Negative', 'Neutral', 'Positive']
-    y_train = le.transform(train_df["sentiment"].astype(str))
-    y_val = le.transform(val_df["sentiment"].astype(str))
+    y_train = le.transform(train_sent)
+    y_val = le.transform(val_sent)
 
     vocab_size = hp["vocab_size"]
     max_len = hp["max_seq_len"]
@@ -231,6 +300,23 @@ def prep_weather_regression(
     df[cols] = df[cols].ffill().bfill()
     # Any remaining NaNs (entirely empty columns) → 0.
     df[cols] = df[cols].fillna(0.0)
+
+    # Optional cyclic time features (week-of-year as sin/cos). Helps regression
+    # when weather has strong seasonal periodicity but the model has no
+    # explicit calendar awareness. Off by default to preserve baseline.
+    if hp.get("add_cyclic_time") and "date" in df.columns:
+        # Note: pandas .dt.isocalendar().week is 1..53 — cycle is ~52 weeks.
+        try:
+            week = pd.to_datetime(df["date"]).dt.isocalendar().week.astype(float)
+        except Exception:
+            week = pd.to_datetime(df["date"]).dt.dayofyear.astype(float) / 7.0
+        df["week_sin"] = np.sin(2 * np.pi * week / 52.0)
+        df["week_cos"] = np.cos(2 * np.pi * week / 52.0)
+        for c in ("week_sin", "week_cos"):
+            if c not in cols:
+                cols.append(c)
+        # Recompute target_idx in case cols was reordered.
+        target_idx = cols.index(target_col)
 
     if group_col is None:
         groups = [(None, df)]

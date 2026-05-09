@@ -1,0 +1,1286 @@
+[
+  {
+    "label": "seattle-long",
+    "task": "timeseries",
+    "datasetId": "seattle",
+    "model": "ANN",
+    "suffix": "long",
+    "hp_overrides": {
+      "epochs": 80,
+      "early_stopping_patience": 15,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 5,
+      "monitor": "val_loss"
+    },
+    "metrics": {
+      "accuracy": 66,
+      "precision": 0.3326,
+      "recall": 0.3734,
+      "f1": 0.3498,
+      "auc": null,
+      "params": "24,069",
+      "trainingTime": "0m 05s"
+    },
+    "epochs": 44,
+    "wall_seconds": 8.7
+  },
+  {
+    "label": "seattle-long",
+    "task": "timeseries",
+    "datasetId": "seattle",
+    "model": "RNN",
+    "suffix": "long",
+    "hp_overrides": {
+      "epochs": 80,
+      "early_stopping_patience": 15,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 5,
+      "monitor": "val_loss"
+    },
+    "metrics": {
+      "accuracy": 63,
+      "precision": 0.3167,
+      "recall": 0.3672,
+      "f1": 0.3375,
+      "auc": null,
+      "params": "4,741",
+      "trainingTime": "0m 03s"
+    },
+    "epochs": 21,
+    "wall_seconds": 3.7
+  },
+  {
+    "label": "seattle-long",
+    "task": "timeseries",
+    "datasetId": "seattle",
+    "model": "LSTM",
+    "suffix": "long",
+    "hp_overrides": {
+      "epochs": 80,
+      "early_stopping_patience": 15,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 5,
+      "monitor": "val_loss"
+    },
+    "metrics": {
+      "accuracy": 58,
+      "precision": 0.3025,
+      "recall": 0.3408,
+      "f1": 0.3085,
+      "auc": null,
+      "params": "119,749",
+      "trainingTime": "0m 12s"
+    },
+    "epochs": 23,
+    "wall_seconds": 12.7
+  },
+  {
+    "label": "seattle-long",
+    "task": "timeseries",
+    "datasetId": "seattle",
+    "model": "GRU",
+    "suffix": "long",
+    "hp_overrides": {
+      "epochs": 80,
+      "early_stopping_patience": 15,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 5,
+      "monitor": "val_loss"
+    },
+    "metrics": {
+      "accuracy": 60,
+      "precision": 0.3137,
+      "recall": 0.3555,
+      "f1": 0.3184,
+      "auc": null,
+      "params": "52,133",
+      "trainingTime": "0m 13s"
+    },
+    "epochs": 30,
+    "wall_seconds": 13.9
+  },
+  {
+    "label": "seattle-sqrtcw",
+    "task": "timeseries",
+    "datasetId": "seattle",
+    "model": "ANN",
+    "suffix": "sqrtcw",
+    "hp_overrides": {
+      "epochs": 80,
+      "early_stopping_patience": 15,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 5,
+      "monitor": "val_loss",
+      "use_class_weight": "sqrt"
+    },
+    "metrics": {
+      "accuracy": 63,
+      "precision": 0.2609,
+      "recall": 0.2846,
+      "f1": 0.2702,
+      "auc": null,
+      "params": "24,069",
+      "trainingTime": "0m 04s"
+    },
+    "epochs": 41,
+    "wall_seconds": 4.5
+  },
+  {
+    "label": "seattle-sqrtcw",
+    "task": "timeseries",
+    "datasetId": "seattle",
+    "model": "RNN",
+    "suffix": "sqrtcw",
+    "hp_overrides": {
+      "epochs": 80,
+      "early_stopping_patience": 15,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 5,
+      "monitor": "val_loss",
+      "use_class_weight": "sqrt"
+    },
+    "metrics": {
+      "accuracy": 58,
+      "precision": 0.3016,
+      "recall": 0.3418,
+      "f1": 0.308,
+      "auc": null,
+      "params": "4,741",
+      "trainingTime": "0m 04s"
+    },
+    "epochs": 24,
+    "wall_seconds": 4.1
+  },
+  {
+    "label": "seattle-sqrtcw",
+    "task": "timeseries",
+    "datasetId": "seattle",
+    "model": "LSTM",
+    "suffix": "sqrtcw",
+    "hp_overrides": {
+      "epochs": 80,
+      "early_stopping_patience": 15,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 5,
+      "monitor": "val_loss",
+      "use_class_weight": "sqrt"
+    },
+    "metrics": {
+      "accuracy": 62,
+      "precision": 0.3113,
+      "recall": 0.3599,
+      "f1": 0.3317,
+      "auc": null,
+      "params": "119,749",
+      "trainingTime": "0m 13s"
+    },
+    "epochs": 24,
+    "wall_seconds": 13.1
+  },
+  {
+    "label": "seattle-sqrtcw",
+    "task": "timeseries",
+    "datasetId": "seattle",
+    "model": "GRU",
+    "suffix": "sqrtcw",
+    "hp_overrides": {
+      "epochs": 80,
+      "early_stopping_patience": 15,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 5,
+      "monitor": "val_loss",
+      "use_class_weight": "sqrt"
+    },
+    "metrics": {
+      "accuracy": 60,
+      "precision": 0.3089,
+      "recall": 0.3538,
+      "f1": 0.3188,
+      "auc": null,
+      "params": "52,133",
+      "trainingTime": "0m 17s"
+    },
+    "epochs": 38,
+    "wall_seconds": 17.3
+  },
+  {
+    "label": "climate-long",
+    "task": "timeseries",
+    "datasetId": "climate",
+    "model": "ANN",
+    "suffix": "long",
+    "hp_overrides": {
+      "epochs": 80,
+      "early_stopping_patience": 12,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 5
+    },
+    "metrics": {
+      "accuracy": 86,
+      "mae": 2.0089,
+      "rmse": 2.4615,
+      "mape": 8.61,
+      "params": "23,809",
+      "trainingTime": "0m 02s"
+    },
+    "epochs": 16,
+    "wall_seconds": 6.1
+  },
+  {
+    "label": "climate-long",
+    "task": "timeseries",
+    "datasetId": "climate",
+    "model": "RNN",
+    "suffix": "long",
+    "hp_overrides": {
+      "epochs": 80,
+      "early_stopping_patience": 12,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 5
+    },
+    "metrics": {
+      "accuracy": 29,
+      "mae": 4.8997,
+      "rmse": 5.5447,
+      "mape": 20.05,
+      "params": "4,481",
+      "trainingTime": "0m 03s"
+    },
+    "epochs": 13,
+    "wall_seconds": 2.8
+  },
+  {
+    "label": "climate-long",
+    "task": "timeseries",
+    "datasetId": "climate",
+    "model": "LSTM",
+    "suffix": "long",
+    "hp_overrides": {
+      "epochs": 80,
+      "early_stopping_patience": 12,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 5
+    },
+    "metrics": {
+      "accuracy": 54,
+      "mae": 3.8577,
+      "rmse": 4.447,
+      "mape": 15.47,
+      "params": "117,569",
+      "trainingTime": "0m 12s"
+    },
+    "epochs": 21,
+    "wall_seconds": 12.2
+  },
+  {
+    "label": "climate-long",
+    "task": "timeseries",
+    "datasetId": "climate",
+    "model": "GRU",
+    "suffix": "long",
+    "hp_overrides": {
+      "epochs": 80,
+      "early_stopping_patience": 12,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 5
+    },
+    "metrics": {
+      "accuracy": 47,
+      "mae": 4.0966,
+      "rmse": 4.7981,
+      "mape": 19.1,
+      "params": "50,449",
+      "trainingTime": "0m 07s"
+    },
+    "epochs": 13,
+    "wall_seconds": 7.6
+  },
+  {
+    "label": "corgis-long",
+    "task": "timeseries",
+    "datasetId": "corgis",
+    "model": "ANN",
+    "suffix": "long",
+    "hp_overrides": {
+      "epochs": 80,
+      "early_stopping_patience": 12,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 5
+    },
+    "metrics": {
+      "accuracy": 48,
+      "mae": 9.2824,
+      "rmse": 12.6475,
+      "mape": 25.96,
+      "params": "31,489",
+      "trainingTime": "0m 04s"
+    },
+    "epochs": 16,
+    "wall_seconds": 8.8
+  },
+  {
+    "label": "corgis-long",
+    "task": "timeseries",
+    "datasetId": "corgis",
+    "model": "RNN",
+    "suffix": "long",
+    "hp_overrides": {
+      "epochs": 80,
+      "early_stopping_patience": 12,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 5
+    },
+    "metrics": {
+      "accuracy": 42,
+      "mae": 10.4697,
+      "rmse": 13.3878,
+      "mape": 25.88,
+      "params": "4,609",
+      "trainingTime": "0m 11s"
+    },
+    "epochs": 19,
+    "wall_seconds": 11.7
+  },
+  {
+    "label": "corgis-long",
+    "task": "timeseries",
+    "datasetId": "corgis",
+    "model": "LSTM",
+    "suffix": "long",
+    "hp_overrides": {
+      "epochs": 80,
+      "early_stopping_patience": 12,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 5
+    },
+    "metrics": {
+      "accuracy": 43,
+      "mae": 11.0527,
+      "rmse": 13.2069,
+      "mape": 25.8,
+      "params": "118,593",
+      "trainingTime": "0m 35s"
+    },
+    "epochs": 18,
+    "wall_seconds": 36.1
+  },
+  {
+    "label": "corgis-long",
+    "task": "timeseries",
+    "datasetId": "corgis",
+    "model": "GRU",
+    "suffix": "long",
+    "hp_overrides": {
+      "epochs": 80,
+      "early_stopping_patience": 12,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 5
+    },
+    "metrics": {
+      "accuracy": 38,
+      "mae": 10.5572,
+      "rmse": 13.8246,
+      "mape": 26.01,
+      "params": "51,025",
+      "trainingTime": "0m 26s"
+    },
+    "epochs": 17,
+    "wall_seconds": 26.9
+  },
+  {
+    "label": "tess-specaug",
+    "task": "speech",
+    "datasetId": "tess",
+    "model": "RNN",
+    "suffix": "specaug",
+    "hp_overrides": {
+      "specaug_copies": 3,
+      "epochs": 60,
+      "early_stopping_patience": 10,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 4,
+      "min_lr": 1e-05
+    },
+    "metrics": {
+      "accuracy": 48,
+      "precision": 0.5977,
+      "recall": 0.485,
+      "f1": 0.4676,
+      "auc": 0.8579,
+      "params": "22,535",
+      "trainingTime": "0m 33s"
+    },
+    "epochs": 13,
+    "wall_seconds": 65.9
+  },
+  {
+    "label": "tess-specaug",
+    "task": "speech",
+    "datasetId": "tess",
+    "model": "LSTM",
+    "suffix": "specaug",
+    "hp_overrides": {
+      "specaug_copies": 3,
+      "epochs": 60,
+      "early_stopping_patience": 10,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 4,
+      "min_lr": 1e-05,
+      "learning_rate": 0.002
+    },
+    "metrics": {
+      "accuracy": 56,
+      "precision": 0.5607,
+      "recall": 0.5586,
+      "f1": 0.5199,
+      "auc": 0.8261,
+      "params": "138,247",
+      "trainingTime": "1m 43s"
+    },
+    "epochs": 11,
+    "wall_seconds": 117.8
+  },
+  {
+    "label": "tess-specaug",
+    "task": "speech",
+    "datasetId": "tess",
+    "model": "GRU",
+    "suffix": "specaug",
+    "hp_overrides": {
+      "specaug_copies": 3,
+      "epochs": 60,
+      "early_stopping_patience": 10,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 4,
+      "min_lr": 1e-05
+    },
+    "metrics": {
+      "accuracy": 62,
+      "precision": 0.6849,
+      "recall": 0.6243,
+      "f1": 0.6168,
+      "auc": 0.8935,
+      "params": "66,183",
+      "trainingTime": "1m 16s"
+    },
+    "epochs": 12,
+    "wall_seconds": 90.1
+  },
+  {
+    "label": "twitter-resplit",
+    "task": "sentiment",
+    "datasetId": "twitter",
+    "model": "RNN",
+    "suffix": "resplit",
+    "hp_overrides": {
+      "resplit": true
+    },
+    "metrics": {
+      "accuracy": 83,
+      "precision": 0.8302,
+      "recall": 0.823,
+      "f1": 0.8259,
+      "auc": 0.9555,
+      "params": "2.46M",
+      "trainingTime": "0m 53s"
+    },
+    "epochs": 11,
+    "wall_seconds": 59.9
+  },
+  {
+    "label": "twitter-resplit",
+    "task": "sentiment",
+    "datasetId": "twitter",
+    "model": "LSTM",
+    "suffix": "resplit",
+    "hp_overrides": {
+      "resplit": true
+    },
+    "metrics": {
+      "accuracy": 32,
+      "precision": 0.2782,
+      "recall": 0.2639,
+      "f1": 0.1482,
+      "auc": 0.5443,
+      "params": "2.57M",
+      "trainingTime": "2m 14s"
+    },
+    "epochs": 7,
+    "wall_seconds": 137.3
+  },
+  {
+    "label": "twitter-resplit",
+    "task": "sentiment",
+    "datasetId": "twitter",
+    "model": "GRU",
+    "suffix": "resplit",
+    "hp_overrides": {
+      "resplit": true
+    },
+    "metrics": {
+      "accuracy": 86,
+      "precision": 0.8539,
+      "recall": 0.8486,
+      "f1": 0.8507,
+      "auc": 0.9707,
+      "params": "2.54M",
+      "trainingTime": "4m 53s"
+    },
+    "epochs": 18,
+    "wall_seconds": 296.4
+  },
+  {
+    "label": "climate-pool",
+    "task": "timeseries",
+    "datasetId": "climate",
+    "model": "RNN",
+    "suffix": "pool",
+    "hp_overrides": {
+      "pool_over_time": true,
+      "epochs": 80,
+      "early_stopping_patience": 12,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 5,
+      "learning_rate": 0.003
+    },
+    "metrics": {
+      "accuracy": 43,
+      "mae": 4.1372,
+      "rmse": 4.9788,
+      "mape": 15.31,
+      "params": "4,481",
+      "trainingTime": "0m 08s"
+    },
+    "epochs": 18,
+    "wall_seconds": 18.5
+  },
+  {
+    "label": "climate-pool",
+    "task": "timeseries",
+    "datasetId": "climate",
+    "model": "LSTM",
+    "suffix": "pool",
+    "hp_overrides": {
+      "pool_over_time": true,
+      "epochs": 80,
+      "early_stopping_patience": 12,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 5,
+      "learning_rate": 0.003
+    },
+    "metrics": {
+      "accuracy": 64,
+      "mae": 3.2114,
+      "rmse": 3.9777,
+      "mape": 12.2,
+      "params": "117,569",
+      "trainingTime": "0m 28s"
+    },
+    "epochs": 20,
+    "wall_seconds": 29.2
+  },
+  {
+    "label": "climate-pool",
+    "task": "timeseries",
+    "datasetId": "climate",
+    "model": "GRU",
+    "suffix": "pool",
+    "hp_overrides": {
+      "pool_over_time": true,
+      "epochs": 80,
+      "early_stopping_patience": 12,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 5,
+      "learning_rate": 0.003
+    },
+    "metrics": {
+      "accuracy": 50,
+      "mae": 3.9543,
+      "rmse": 4.664,
+      "mape": 15.55,
+      "params": "50,449",
+      "trainingTime": "0m 28s"
+    },
+    "epochs": 22,
+    "wall_seconds": 29.6
+  },
+  {
+    "label": "twitter-resplit-patient",
+    "task": "sentiment",
+    "datasetId": "twitter",
+    "model": "RNN",
+    "suffix": "resplit2",
+    "hp_overrides": {
+      "resplit": true,
+      "epochs": 30,
+      "early_stopping_patience": 8,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 3
+    },
+    "metrics": {
+      "accuracy": 84,
+      "precision": 0.8344,
+      "recall": 0.8286,
+      "f1": 0.8311,
+      "auc": 0.9606,
+      "params": "2.46M",
+      "trainingTime": "1m 48s"
+    },
+    "epochs": 19,
+    "wall_seconds": 114.8
+  },
+  {
+    "label": "seattle-pool",
+    "task": "timeseries",
+    "datasetId": "seattle",
+    "model": "RNN",
+    "suffix": "pool",
+    "hp_overrides": {
+      "pool_over_time": true,
+      "epochs": 80,
+      "early_stopping_patience": 15,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 5,
+      "learning_rate": 0.003
+    },
+    "metrics": {
+      "accuracy": 59,
+      "precision": 0.2963,
+      "recall": 0.3433,
+      "f1": 0.3173,
+      "auc": null,
+      "params": "4,741",
+      "trainingTime": "0m 10s"
+    },
+    "epochs": 43,
+    "wall_seconds": 15.4
+  },
+  {
+    "label": "seattle-pool",
+    "task": "timeseries",
+    "datasetId": "seattle",
+    "model": "LSTM",
+    "suffix": "pool",
+    "hp_overrides": {
+      "pool_over_time": true,
+      "epochs": 80,
+      "early_stopping_patience": 15,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 5,
+      "learning_rate": 0.003
+    },
+    "metrics": {
+      "accuracy": 58,
+      "precision": 0.2891,
+      "recall": 0.3342,
+      "f1": 0.3097,
+      "auc": null,
+      "params": "119,749",
+      "trainingTime": "0m 17s"
+    },
+    "epochs": 21,
+    "wall_seconds": 18.1
+  },
+  {
+    "label": "seattle-pool",
+    "task": "timeseries",
+    "datasetId": "seattle",
+    "model": "GRU",
+    "suffix": "pool",
+    "hp_overrides": {
+      "pool_over_time": true,
+      "epochs": 80,
+      "early_stopping_patience": 15,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 5,
+      "learning_rate": 0.003
+    },
+    "metrics": {
+      "accuracy": 57,
+      "precision": 0.2999,
+      "recall": 0.3379,
+      "f1": 0.3045,
+      "auc": null,
+      "params": "52,133",
+      "trainingTime": "0m 16s"
+    },
+    "epochs": 21,
+    "wall_seconds": 16.4
+  },
+  {
+    "label": "twitter-resplit-patient",
+    "task": "sentiment",
+    "datasetId": "twitter",
+    "model": "LSTM",
+    "suffix": "resplit2",
+    "hp_overrides": {
+      "resplit": true,
+      "epochs": 30,
+      "early_stopping_patience": 8,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 3
+    },
+    "metrics": {
+      "accuracy": 36,
+      "precision": 0.1868,
+      "recall": 0.3076,
+      "f1": 0.2189,
+      "auc": 0.6136,
+      "params": "2.57M",
+      "trainingTime": "3m 20s"
+    },
+    "epochs": 10,
+    "wall_seconds": 203.4
+  },
+  {
+    "label": "tess-mildaug",
+    "task": "speech",
+    "datasetId": "tess",
+    "model": "RNN",
+    "suffix": "mildaug",
+    "hp_overrides": {
+      "specaug_copies": 2,
+      "specaug_time_mask": 12,
+      "specaug_freq_mask": 4,
+      "specaug_n_time": 1,
+      "specaug_n_freq": 1,
+      "epochs": 60,
+      "early_stopping_patience": 12,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 5,
+      "min_lr": 1e-05
+    },
+    "metrics": {
+      "accuracy": 46,
+      "precision": 0.5305,
+      "recall": 0.4643,
+      "f1": 0.4494,
+      "auc": 0.8298,
+      "params": "22,535",
+      "trainingTime": "0m 34s"
+    },
+    "epochs": 13,
+    "wall_seconds": 65.6
+  },
+  {
+    "label": "twitter-resplit-patient",
+    "task": "sentiment",
+    "datasetId": "twitter",
+    "model": "GRU",
+    "suffix": "resplit2",
+    "hp_overrides": {
+      "resplit": true,
+      "epochs": 30,
+      "early_stopping_patience": 8,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 3
+    },
+    "metrics": {
+      "accuracy": 82,
+      "precision": 0.8154,
+      "recall": 0.8137,
+      "f1": 0.8141,
+      "auc": 0.9553,
+      "params": "2.54M",
+      "trainingTime": "9m 40s"
+    },
+    "epochs": 30,
+    "wall_seconds": 583.3
+  },
+  {
+    "label": "twitter-resplit-masked",
+    "task": "sentiment",
+    "datasetId": "twitter",
+    "model": "RNN",
+    "suffix": "resplitm",
+    "hp_overrides": {
+      "resplit": true,
+      "embedding_mask_zero": true,
+      "epochs": 30,
+      "early_stopping_patience": 8,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 3
+    },
+    "metrics": {
+      "accuracy": 87,
+      "precision": 0.8769,
+      "recall": 0.8679,
+      "f1": 0.8717,
+      "auc": 0.9775,
+      "params": "2.46M",
+      "trainingTime": "1m 11s"
+    },
+    "epochs": 11,
+    "wall_seconds": 78.1
+  },
+  {
+    "label": "twitter-resplit-masked",
+    "task": "sentiment",
+    "datasetId": "twitter",
+    "model": "LSTM",
+    "suffix": "resplitm",
+    "hp_overrides": {
+      "resplit": true,
+      "embedding_mask_zero": true,
+      "epochs": 30,
+      "early_stopping_patience": 8,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 3
+    },
+    "metrics": {
+      "accuracy": 87,
+      "precision": 0.8751,
+      "recall": 0.8675,
+      "f1": 0.8708,
+      "auc": 0.976,
+      "params": "2.57M",
+      "trainingTime": "4m 15s"
+    },
+    "epochs": 12,
+    "wall_seconds": 258.1
+  },
+  {
+    "label": "twitter-resplit-masked",
+    "task": "sentiment",
+    "datasetId": "twitter",
+    "model": "GRU",
+    "suffix": "resplitm",
+    "hp_overrides": {
+      "resplit": true,
+      "embedding_mask_zero": true,
+      "epochs": 30,
+      "early_stopping_patience": 8,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 3
+    },
+    "metrics": {
+      "accuracy": 87,
+      "precision": 0.8698,
+      "recall": 0.8596,
+      "f1": 0.8638,
+      "auc": 0.9754,
+      "params": "2.54M",
+      "trainingTime": "3m 34s"
+    },
+    "epochs": 11,
+    "wall_seconds": 217.8
+  },
+  {
+    "label": "corgis-cyclic",
+    "task": "timeseries",
+    "datasetId": "corgis",
+    "model": "ANN",
+    "suffix": "cyclic",
+    "hp_overrides": {
+      "add_cyclic_time": true,
+      "epochs": 60,
+      "early_stopping_patience": 10,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 5
+    },
+    "metrics": {
+      "accuracy": 56,
+      "mae": 8.566,
+      "rmse": 11.5808,
+      "mape": 24.12,
+      "params": "39,169",
+      "trainingTime": "0m 05s"
+    },
+    "epochs": 18,
+    "wall_seconds": 9.3
+  },
+  {
+    "label": "corgis-cyclic",
+    "task": "timeseries",
+    "datasetId": "corgis",
+    "model": "RNN",
+    "suffix": "cyclic",
+    "hp_overrides": {
+      "add_cyclic_time": true,
+      "epochs": 60,
+      "early_stopping_patience": 10,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 5
+    },
+    "metrics": {
+      "accuracy": 37,
+      "mae": 10.9032,
+      "rmse": 13.9172,
+      "mape": 27.05,
+      "params": "4,737",
+      "trainingTime": "0m 09s"
+    },
+    "epochs": 23,
+    "wall_seconds": 10.0
+  },
+  {
+    "label": "corgis-cyclic",
+    "task": "timeseries",
+    "datasetId": "corgis",
+    "model": "LSTM",
+    "suffix": "cyclic",
+    "hp_overrides": {
+      "add_cyclic_time": true,
+      "epochs": 60,
+      "early_stopping_patience": 10,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 5
+    },
+    "metrics": {
+      "accuracy": 34,
+      "mae": 11.5398,
+      "rmse": 14.2652,
+      "mape": 27.28,
+      "params": "119,617",
+      "trainingTime": "0m 29s"
+    },
+    "epochs": 16,
+    "wall_seconds": 29.7
+  },
+  {
+    "label": "corgis-cyclic",
+    "task": "timeseries",
+    "datasetId": "corgis",
+    "model": "GRU",
+    "suffix": "cyclic",
+    "hp_overrides": {
+      "add_cyclic_time": true,
+      "epochs": 60,
+      "early_stopping_patience": 10,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 5
+    },
+    "metrics": {
+      "accuracy": 35,
+      "mae": 11.3456,
+      "rmse": 14.1231,
+      "mape": 26.52,
+      "params": "51,601",
+      "trainingTime": "0m 24s"
+    },
+    "epochs": 16,
+    "wall_seconds": 25.2
+  },
+  {
+    "label": "climate-cyclic",
+    "task": "timeseries",
+    "datasetId": "climate",
+    "model": "ANN",
+    "suffix": "cyclic",
+    "hp_overrides": {
+      "add_cyclic_time": true,
+      "epochs": 80,
+      "early_stopping_patience": 12,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 5,
+      "learning_rate": 0.003
+    },
+    "metrics": {
+      "accuracy": 90,
+      "mae": 1.6001,
+      "rmse": 2.0459,
+      "mape": 6.81,
+      "params": "31,489",
+      "trainingTime": "0m 03s"
+    },
+    "epochs": 22,
+    "wall_seconds": 7.0
+  },
+  {
+    "label": "climate-cyclic",
+    "task": "timeseries",
+    "datasetId": "climate",
+    "model": "RNN",
+    "suffix": "cyclic",
+    "hp_overrides": {
+      "add_cyclic_time": true,
+      "pool_over_time": true,
+      "epochs": 80,
+      "early_stopping_patience": 12,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 5,
+      "learning_rate": 0.003
+    },
+    "metrics": {
+      "accuracy": 72,
+      "mae": 2.916,
+      "rmse": 3.491,
+      "mape": 13.34,
+      "params": "4,609",
+      "trainingTime": "0m 03s"
+    },
+    "epochs": 15,
+    "wall_seconds": 3.2
+  },
+  {
+    "label": "climate-cyclic",
+    "task": "timeseries",
+    "datasetId": "climate",
+    "model": "LSTM",
+    "suffix": "cyclic",
+    "hp_overrides": {
+      "add_cyclic_time": true,
+      "pool_over_time": true,
+      "epochs": 80,
+      "early_stopping_patience": 12,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 5,
+      "learning_rate": 0.003
+    },
+    "metrics": {
+      "accuracy": 71,
+      "mae": 2.9211,
+      "rmse": 3.5377,
+      "mape": 14.18,
+      "params": "118,593",
+      "trainingTime": "0m 08s"
+    },
+    "epochs": 13,
+    "wall_seconds": 8.8
+  },
+  {
+    "label": "climate-cyclic",
+    "task": "timeseries",
+    "datasetId": "climate",
+    "model": "GRU",
+    "suffix": "cyclic",
+    "hp_overrides": {
+      "add_cyclic_time": true,
+      "pool_over_time": true,
+      "epochs": 80,
+      "early_stopping_patience": 12,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 5,
+      "learning_rate": 0.003
+    },
+    "metrics": {
+      "accuracy": 71,
+      "mae": 3.0212,
+      "rmse": 3.5604,
+      "mape": 13.97,
+      "params": "51,025",
+      "trainingTime": "0m 09s"
+    },
+    "epochs": 16,
+    "wall_seconds": 9.2
+  },
+  {
+    "label": "tess-rnn-drop",
+    "task": "speech",
+    "datasetId": "tess",
+    "model": "RNN",
+    "suffix": "drop",
+    "hp_overrides": {
+      "dropout": 0.5,
+      "hidden_units": {
+        "RNN": 64
+      },
+      "epochs": 60,
+      "early_stopping_patience": 10,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 4,
+      "specaug_copies": 1,
+      "specaug_time_mask": 8,
+      "specaug_freq_mask": 3,
+      "specaug_n_time": 1,
+      "specaug_n_freq": 1,
+      "min_lr": 1e-05
+    },
+    "metrics": {
+      "accuracy": 37,
+      "precision": 0.4,
+      "recall": 0.3671,
+      "f1": 0.309,
+      "auc": 0.8361,
+      "params": "7,175",
+      "trainingTime": "0m 11s"
+    },
+    "epochs": 11,
+    "wall_seconds": 29.6
+  },
+  {
+    "label": "climate-w60",
+    "task": "timeseries",
+    "datasetId": "climate",
+    "model": "ANN",
+    "suffix": "w60",
+    "hp_overrides": {
+      "add_cyclic_time": true,
+      "window_size": 60,
+      "epochs": 80,
+      "early_stopping_patience": 12,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 5,
+      "learning_rate": 0.003
+    },
+    "metrics": {
+      "accuracy": 77,
+      "mae": 2.651,
+      "rmse": 3.1803,
+      "mape": 10.13,
+      "params": "54,529",
+      "trainingTime": "0m 04s"
+    },
+    "epochs": 40,
+    "wall_seconds": 8.3
+  },
+  {
+    "label": "climate-w60",
+    "task": "timeseries",
+    "datasetId": "climate",
+    "model": "RNN",
+    "suffix": "w60",
+    "hp_overrides": {
+      "add_cyclic_time": true,
+      "pool_over_time": true,
+      "window_size": 60,
+      "epochs": 80,
+      "early_stopping_patience": 12,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 5,
+      "learning_rate": 0.003
+    },
+    "metrics": {
+      "accuracy": 68,
+      "mae": 3.1608,
+      "rmse": 3.724,
+      "mape": 12.46,
+      "params": "4,609",
+      "trainingTime": "0m 08s"
+    },
+    "epochs": 38,
+    "wall_seconds": 8.2
+  },
+  {
+    "label": "climate-w60",
+    "task": "timeseries",
+    "datasetId": "climate",
+    "model": "LSTM",
+    "suffix": "w60",
+    "hp_overrides": {
+      "add_cyclic_time": true,
+      "pool_over_time": true,
+      "window_size": 60,
+      "epochs": 80,
+      "early_stopping_patience": 12,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 5,
+      "learning_rate": 0.003
+    },
+    "metrics": {
+      "accuracy": 61,
+      "mae": 3.6293,
+      "rmse": 4.1206,
+      "mape": 15.56,
+      "params": "118,593",
+      "trainingTime": "0m 16s"
+    },
+    "epochs": 17,
+    "wall_seconds": 16.8
+  },
+  {
+    "label": "climate-w60",
+    "task": "timeseries",
+    "datasetId": "climate",
+    "model": "GRU",
+    "suffix": "w60",
+    "hp_overrides": {
+      "add_cyclic_time": true,
+      "pool_over_time": true,
+      "window_size": 60,
+      "epochs": 80,
+      "early_stopping_patience": 12,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 5,
+      "learning_rate": 0.003
+    },
+    "metrics": {
+      "accuracy": 59,
+      "mae": 3.6861,
+      "rmse": 4.2234,
+      "mape": 16.68,
+      "params": "51,025",
+      "trainingTime": "0m 14s"
+    },
+    "epochs": 17,
+    "wall_seconds": 14.7
+  },
+  {
+    "label": "corgis-cyclic-pool",
+    "task": "timeseries",
+    "datasetId": "corgis",
+    "model": "RNN",
+    "suffix": "cycpool",
+    "hp_overrides": {
+      "add_cyclic_time": true,
+      "pool_over_time": true,
+      "epochs": 60,
+      "early_stopping_patience": 10,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 5,
+      "learning_rate": 0.003
+    },
+    "metrics": {
+      "accuracy": 10,
+      "mae": 12.895,
+      "rmse": 16.6203,
+      "mape": 31.56,
+      "params": "4,737",
+      "trainingTime": "0m 18s"
+    },
+    "epochs": 26,
+    "wall_seconds": 23.3
+  },
+  {
+    "label": "corgis-cyclic-pool",
+    "task": "timeseries",
+    "datasetId": "corgis",
+    "model": "LSTM",
+    "suffix": "cycpool",
+    "hp_overrides": {
+      "add_cyclic_time": true,
+      "pool_over_time": true,
+      "epochs": 60,
+      "early_stopping_patience": 10,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 5,
+      "learning_rate": 0.003
+    },
+    "metrics": {
+      "accuracy": 12,
+      "mae": 12.9164,
+      "rmse": 16.4268,
+      "mape": 31.06,
+      "params": "119,617",
+      "trainingTime": "1m 00s"
+    },
+    "epochs": 23,
+    "wall_seconds": 60.8
+  },
+  {
+    "label": "corgis-cyclic-pool",
+    "task": "timeseries",
+    "datasetId": "corgis",
+    "model": "GRU",
+    "suffix": "cycpool",
+    "hp_overrides": {
+      "add_cyclic_time": true,
+      "pool_over_time": true,
+      "epochs": 60,
+      "early_stopping_patience": 10,
+      "reduce_lr_on_plateau": true,
+      "reduce_lr_patience": 5,
+      "learning_rate": 0.003
+    },
+    "metrics": {
+      "accuracy": 30,
+      "mae": 11.6168,
+      "rmse": 14.6105,
+      "mape": 27.83,
+      "params": "51,601",
+      "trainingTime": "0m 30s"
+    },
+    "epochs": 19,
+    "wall_seconds": 30.7
+  }
+]

@@ -23,8 +23,10 @@ from config import (
 )
 
 
-def cache_paths(task: str, dataset_id: str, model: str) -> tuple[Path, Path]:
+def cache_paths(task: str, dataset_id: str, model: str, suffix: str = "") -> tuple[Path, Path]:
     base = f"{task}_{dataset_id}_{model}"
+    if suffix:
+        base = f"{base}_{suffix}"
     return SAVED_MODELS_DIR / f"{base}.h5", RESULTS_DIR / f"{base}.json"
 
 
@@ -41,15 +43,21 @@ def run_training(
     hyperparams: dict[str, Any] | None = None,
     force_retrain: bool = False,
     progress_cb=None,
+    result_suffix: str = "",
+    save_plots: bool = True,
 ) -> dict[str, Any]:
-    """Train (or load from cache) and return the per-model results dict."""
-    model_path, results_path = cache_paths(task, dataset_id, model)
+    """Train (or load from cache) and return the per-model results dict.
+
+    ``result_suffix`` (e.g. "exp1") writes to ``<base>_<suffix>.{h5,json}`` so
+    experiment runs don't overwrite the canonical baseline.
+    """
+    model_path, results_path = cache_paths(task, dataset_id, model, suffix=result_suffix)
     if results_path.exists() and not force_retrain:
         return json.loads(results_path.read_text(encoding="utf-8"))
 
     seed_tensorflow()
     # Lazy imports — TF is heavy.
-    from tensorflow.keras.callbacks import EarlyStopping
+    from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
 
     from src import data_loader, evaluate, models, preprocessing, visualize
 
@@ -74,20 +82,54 @@ def run_training(
     n_params = int(keras_model.count_params())
 
     print(f"[{task}/{dataset_id}/{model}] fitting up to {hp_base['epochs']} epochs…")
+    monitor = hp_base.get("monitor", "val_loss")
+    mode = hp_base.get("monitor_mode", "min" if "loss" in monitor else "max")
     es = EarlyStopping(
-        monitor="val_loss",
+        monitor=monitor,
+        mode=mode,
         patience=hp_base["early_stopping_patience"],
         restore_best_weights=True,
         verbose=1,
     )
+    callbacks = [es]
+    if hp_base.get("reduce_lr_on_plateau"):
+        callbacks.append(
+            ReduceLROnPlateau(
+                monitor=monitor,
+                mode=mode,
+                factor=float(hp_base.get("reduce_lr_factor", 0.5)),
+                patience=int(hp_base.get("reduce_lr_patience", 3)),
+                min_lr=float(hp_base.get("min_lr", 1e-6)),
+                verbose=1,
+            )
+        )
+
+    fit_kwargs: dict[str, Any] = {}
+    # Optional class weights (for severely imbalanced classification tasks).
+    cw_mode = hp_base.get("use_class_weight")
+    if data.get("classify") and cw_mode:
+        from sklearn.utils.class_weight import compute_class_weight
+        y_tr = data["y_train"]
+        unique = np.unique(y_tr)
+        if cw_mode == "sqrt":
+            # Milder than full balanced: sqrt(N/(K*N_c)). Less overshoot for rare classes.
+            counts = np.array([(y_tr == c).sum() for c in unique], dtype=np.float64)
+            raw = (len(y_tr) / (len(unique) * counts))
+            cw = np.sqrt(raw)
+        else:
+            cw = compute_class_weight(class_weight="balanced", classes=unique, y=y_tr)
+        fit_kwargs["class_weight"] = {int(c): float(w) for c, w in zip(unique, cw)}
+        print(f"   using class_weight ({cw_mode}): {fit_kwargs['class_weight']}")
+
     t0 = time.time()
     history = keras_model.fit(
         data["X_train"], data["y_train"],
         validation_data=(data["X_val"], data["y_val"]),
         epochs=hp_base["epochs"],
         batch_size=hp_base["batch_size"],
-        callbacks=[es],
+        callbacks=callbacks,
         verbose=2,
+        **fit_kwargs,
     )
     train_seconds = time.time() - t0
     print(f"[{task}/{dataset_id}/{model}] training done in {train_seconds:.1f}s")
@@ -191,10 +233,11 @@ def run_training(
     results_path.write_text(json.dumps(result, indent=2), encoding="utf-8")
 
     # Render plots (best-effort; don't fail training if plotting fails).
-    try:
-        visualize.render_all(task, dataset_id, model, result)
-    except Exception as exc:
-        print(f"   warning: plot rendering failed: {exc}")
+    if save_plots and not result_suffix:
+        try:
+            visualize.render_all(task, dataset_id, model, result)
+        except Exception as exc:
+            print(f"   warning: plot rendering failed: {exc}")
 
     return result
 

@@ -93,8 +93,13 @@ def plot_confusion_matrix(matrix, classes: list[str], out: Path, model_name: str
 def plot_roc_curve(roc: dict[str, Any], out: Path, model_name: str) -> None:
     plt = _setup_matplotlib()
     fig, ax = plt.subplots(figsize=(6, 5), dpi=120)
+    auc_val = roc.get("auc")
+    if auc_val is None:
+        auc_label = "n/a"
+    else:
+        auc_label = f"{auc_val:.3f}"
     ax.plot(roc["fpr"], roc["tpr"], color="#22d3ee", lw=2,
-            label=f"{model_name} (AUC = {roc.get('auc', 0):.3f})")
+            label=f"{model_name} (AUC = {auc_label})")
     ax.plot([0, 1], [0, 1], color="#94a3b8", lw=1, ls="--", label="Chance")
     ax.set_xlabel("False positive rate")
     ax.set_ylabel("True positive rate")
